@@ -2,7 +2,7 @@ p {
   color: white;
 }
 body {
-  background-color: black;
+  background-color: #222;
   font-family: 'Open Sans', sans-serif;
 }
 h1 {
@@ -11,7 +11,6 @@ h1 {
 .header-container{
   position: relative;
   text-align: center;
-  float: clear;
 }
 .container{
   padding: 20px;
@@ -20,22 +19,23 @@ h1 {
 
 .nav ul {
   list-style-type: none;
-  margin: 0;
-  padding: 0;
-
+  padding-inline-start: 0px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  background-color: darkSlateGray;
 }
 .nav li {
-  display: inline-block;
-  align: center;
+  display: block;
 }
 
 .nav a {
-  display: block;
-  padding: 8px 16px;
+  display: inline-block;
+  padding: 8px 20px;
   color: white;
   text-decoration: none;
 }
 
 .nav a:hover {
-  background-color: mediumSeaGreen;
+  background-color: gray;
 }
