@@ -12,6 +12,9 @@ h1 {
   position: relative;
   text-align: center;
 }
+.about-container{
+  width: 33%;
+}
 .container{
   padding: 20px;
 }
