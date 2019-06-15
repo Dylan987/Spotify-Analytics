@@ -1,0 +1,41 @@
+p {
+  color: white;
+}
+body {
+  background-color: #222;
+  font-family: 'Open Sans', sans-serif;
+}
+h1 {
+  color: mediumSeaGreen;
+}
+.header-container{
+  position: relative;
+  text-align: center;
+}
+.container{
+  padding: 20px;
+}
+
+
+.nav ul {
+  list-style-type: none;
+  padding-inline-start: 0px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  background-color: darkSlateGray;
+}
+.nav li {
+  display: block;
+}
+
+.nav a {
+  display: inline-block;
+  padding: 8px 20px;
+  color: white;
+  text-decoration: none;
+}
+
+.nav a:hover {
+  background-color: gray;
+}
