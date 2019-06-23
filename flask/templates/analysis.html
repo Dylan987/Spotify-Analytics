@@ -33,15 +33,7 @@
     </ul>
   </div>
   <p>Enter a song to search for</p>
-  <form onsubmit="handle_analysis_form()" id = "analysis-form">
-    <input id="analysis-song-entry" type="text" name="query" value="" placeholder="Enter Song Here"><br>
-    <input type="submit">
-  </form>
-  <p id="what-they-search-for">
-    You typed: {{ search }}
-  </p>
-  <p>
-    Your analysis: {{ analysis }}
-  </p>
+  <input id="analysis-song-entry" type="text" name="query" value="" placeholder="Enter Song Here">
+  <button id="analysisform" onclick = "handle_button()"> Click to Search </button>
 </body>
 </html>
