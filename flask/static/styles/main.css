@@ -41,12 +41,4 @@ h1 {
 
 .nav a:hover {
   background-color: gray;
-  duration: 400ms;
-}
-
-.login {
-    margin: 0;
-    padding: 0;
-    font-family: 'Open Sans', sans-serif;
-    background: url(images/loginback.jpg) no-repeat;
 }
