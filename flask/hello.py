@@ -22,7 +22,7 @@ def analysis_page():
         analysis = json.dumps(pyscripts.analysis(pyscripts.query(searchword)[0]["id"]))
     return render_template("analysis.html", search=searchword, analysis=analysis)
 
-@app.route("/home.html")
+@app.route("/")
 def home_page():
     return render_template("home.html")
 
