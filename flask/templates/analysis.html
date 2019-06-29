@@ -5,8 +5,8 @@
   <!--<script src="scripts/script.js"></script>-->
   <script src="/static/scripts/test-script.js"></script>
   <title>Spotify Analytics - Analysis</title>
-  <link rel="shortcut icon" type="image/png" href="/static/images/favicon.png">
-  <link rel="stylesheet" type="text/css" href="/static/styles/main.css">
+  <link rel="shortcut icon" type="image/png" href="../static/images/favicon.png">
+  <link rel="stylesheet" type="text/css" href="../static/styles/main.css">
   <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
 </head>
 <body>
@@ -32,8 +32,19 @@
       </li>
     </ul>
   </div>
-  <p>Enter a song to search for</p>
-  <input id="analysis-song-entry" type="text" name="query" value="" placeholder="Enter Song Here">
-  <button id="analysisform" onclick = "handle_button()"> Click to Search </button>
+  <div class="formbox">
+    <span>Find analysis for...</span>
+    <select>
+        <option value="retry">Select type</option>
+        <option value="track">Songs</option>
+        <option value="album">Albums</option>
+        <option value="artist">Artists</option>
+        <option value="playlist">Playlists</option>
+    </select>
+    <div class="textbox">
+        <input id="analysis-song-entry" type="text" name="query" value="" placeholder="Enter your query">
+    </div>
+    <button id="analysisform" onclick = "handle_button()"> Click to Search </button>
+</div>
 </body>
 </html>
