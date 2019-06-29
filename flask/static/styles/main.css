@@ -1,3 +1,4 @@
+
 p {
   color: white;
 }
@@ -41,4 +42,77 @@ h1 {
 
 .nav a:hover {
   background-color: gray;
+}
+
+.formbox {
+    width: 300px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+}
+.formbox span {
+    margin-bottom: 50px;
+    padding: 13px;
+    font-size: 18px;
+    color: white;
+    width: 100%;
+    position: relative;
+    float: bottom;
+    text-align: center;
+    justify-content: center;
+}
+.textbox {
+    width: 300px;
+    overflow: hidden;
+    margin: 8px 0;
+    padding: 8px 0;
+    border-bottom: 1px solid mediumSeaGreen;
+}
+.textbox input{
+    border: none;
+    background: none;
+    outline: none;
+    font-size: 14px;
+    color: white;
+    margin: 10px;
+    float: left;
+    margin: 0 10px;
+    width: 80%;
+}
+button {
+    width: 100%;
+    background: none;
+    border: 1px solid mediumSeaGreen;
+    color: white;
+    padding: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    margin: 12px 0;
+    transition: 300ms;
+}
+button:hover {
+    background: mediumSeaGreen;
+}
+select {
+    position: relative;
+    font-family: 'Open Sans', sans-serif;
+    float: right;
+    background: none;
+    margin: -2px 0;
+    color: white;
+    width: 40%;
+    border: 1px solid mediumSeaGreen;
+    padding: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: 300ms;
+}
+select:focus, select:hover {
+    background-color: mediumSeaGreen;
+    color: black;
+}
+option {
+    background: none;
 }
