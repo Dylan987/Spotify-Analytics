@@ -19,6 +19,12 @@ h1 {
 .container{
   padding: 20px;
 }
+.centered-container {
+  width: 50%;
+  position: relative;
+  left: 25%;
+  align-content: center;
+}
 
 
 .nav ul {
@@ -45,19 +51,21 @@ h1 {
 }
 
 .formbox {
+  /*
     width: 300px;
     position: relative;
     top: 50%;
     left: 50%;
     transform: translate(-50%, 60%);
+    */
     color: white;
+    font-family: 'Open Sans', sans-serif;
 }
 .formbox span {
     margin-bottom: 50px;
-    padding: 13px;
     font-size: 18px;
     color: white;
-    width: 100%;
+    width: 20%;
     position: relative;
     float: bottom;
     text-align: center;
@@ -66,21 +74,19 @@ h1 {
 .textbox {
     width: 300px;
     overflow: hidden;
-    margin: 8px 0;
+    margin: 8px 0px 20px 0px;
     padding: 8px 0;
     border-bottom: 1px solid mediumSeaGreen;
 }
 .textbox input{
     border: none;
+    width: 100%;
     background: none;
     outline: none;
     font-size: 14px;
     color: white;
-    margin: 10px;
-    float: left;
-    margin: 0 10px;
-    width: 80%;
 }
+
 button {
     width: 100%;
     background: none;
@@ -95,24 +101,33 @@ button {
 button:hover {
     background: mediumSeaGreen;
 }
+button:focus {
+  border: 1px solid mediumSeaGreen;
+}
 select {
-    position: relative;
-    font-family: 'Open Sans', sans-serif;
+    display: inline-block;
+    width: 40%;
     float: right;
     background: none;
-    margin: -2px 0;
     color: white;
-    width: 40%;
     border: 1px solid mediumSeaGreen;
     padding: 5px;
     font-size: 14px;
     cursor: pointer;
     transition: 300ms;
+    font-family: 'Open Sans', sans-serif;
 }
 select:focus, select:hover {
     background-color: mediumSeaGreen;
     color: black;
+    border: 1px solid mediumSeaGreen;
 }
 option {
     background: none;
+}
+.results_container span {
+  color: white;
+}
+.result_row:hover {
+  background-color: black;
 }

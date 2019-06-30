@@ -32,19 +32,23 @@
       </li>
     </ul>
   </div>
-  <div class="formbox">
-    <span>Find analysis for...</span>
-    <select id="type-selection">
-        <option value="retry">Select type</option>
-        <option value="track">Songs</option>
-        <option value="album">Albums</option>
-        <option value="artist">Artists</option>
-        <option value="playlist">Playlists</option>
-    </select>
-    <div class="textbox">
-        <input id="analysis-song-entry" type="text" name="query" value="" placeholder="Enter your query">
-    </div>
-    <button id="analysisform" onclick = "handle_button()"> Click to Search </button>
-</div>
+  <div class = "container">
+    <div class = "centered-container">
+      <div class="formbox">
+        <span>Find analysis for...</span>
+        <select id="type-selection">
+            <option value="retry">Select type</option>
+            <option value="track">Songs</option>
+            <option value="album">Albums</option>
+            <option value="artist">Artists</option>
+            <option value="playlist">Playlists</option>
+        </select>
+        <div class="textbox">
+            <input id="analysis-song-entry" type="text" name="query" value="" placeholder="Enter your query">
+        </div>
+        <button id="analysisform" onclick = "handle_button()"> Click to Search </button>
+      </div>
+  </div>
+  </div>
 </body>
 </html>
