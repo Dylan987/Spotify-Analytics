@@ -14,11 +14,12 @@ def get_token():
     return token
 
 
-def query(_q):
+def query(_q, _t):
+
     head = {"Authorization": "Bearer " + get_token()}
-    para = {"q": _q, "type": "track"}
+    para = {"query": _q, "type": _t}
     url = "https://api.spotify.com/v1/search"
-    req = requests.get(url, headers=head, params=para).json()["tracks"]["items"]
+    req = requests.get(url, headers=head, params=para).json()
     return req
 
 

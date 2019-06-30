@@ -1,26 +1,28 @@
 from flask import Flask
 from flask import request
-from flask_cors import CORS
 from flask import render_template
 import requests
 import pyscripts
 import json
+import urllib.parse
 
 app = Flask("__name__")
-CORS(app)
 
 
-@app.route("/analysis/<q>")
-def analysis(q):
-    return json.dumps(pyscripts.analysis(pyscripts.query(q)[0]["id"]))
+@app.route("/analysis/<qt>")
+def analysis(qt):
+    params = urllib.parse.parse_qs(qt)
+
+    q = params["q"]
+    t = params["t"]
+
+    req = pyscripts.query(q, t)
+
+    return json.dumps(req)
 
 @app.route("/analysis.html")
 def analysis_page():
-    searchword = request.args.get('query', "")
-    analysis = ""
-    if not(searchword == ""):
-        analysis = json.dumps(pyscripts.analysis(pyscripts.query(searchword)[0]["id"]))
-    return render_template("analysis.html", search=searchword, analysis=analysis)
+    return render_template("analysis.html")
 
 @app.route("/home.html")
 def home_page():
