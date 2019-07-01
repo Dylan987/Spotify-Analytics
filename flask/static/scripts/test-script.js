@@ -17,6 +17,12 @@ var handle_button = function(event) {
 
       number_of_displayed = 5 // set to 5 because
 
+      //delete any previous searches
+      if (document.querySelector(".results_container") !== null) {
+        console.log("deleting");
+        document.body.removeChild(document.querySelector(".results_container"));
+      }
+
       if (type == "track") {
         items = data["tracks"]["items"]
         table_rows = document.createElement("div");
@@ -40,14 +46,6 @@ var handle_button = function(event) {
           album_name.appendChild(album_name_text);
           row.appendChild(album_name);
 
-
-          //preview_audio = document.createElement("audio");
-          //preview_audio.setAttribute("controls", "");
-          //preview_audio_source = document.createElement("source");
-          //preview_audio_source.setAttribute("src", items[i]["preview_url"])
-          //preview_audio.appendChild(preview_audio_source);
-          //row.appendChild(preview_audio);
-
           preview_audio = document.createElement("iframe");
           for (var key in iframe_rules) {
               preview_audio.setAttribute(key, iframe_rules[key]);
@@ -55,9 +53,9 @@ var handle_button = function(event) {
           preview_audio.setAttribute("src", "https://open.spotify.com/embed/" + type + "/" + items[i]["id"]);
           row.appendChild(preview_audio);
 
-
-          document.body.appendChild(row);
+          table_rows.appendChild(row)
         }
+        document.body.appendChild(table_rows);
       }
       else if (type == "artist") {
         //do something else
@@ -68,7 +66,7 @@ var handle_button = function(event) {
           table_rows.setAttribute("class", "results_container");
           for (var i = 0; i < number_of_displayed; i++){
               row = document.createElement("div");
-              row.setAttribute("class", "results_container");
+              row.setAttribute("class", "results_row");
 
               album_name = document.createElement("p");
               album_name.appendChild(document.createTextNode("Name: " + items[i]["name"]));
@@ -87,8 +85,9 @@ var handle_button = function(event) {
               preview_audio.setAttribute("src", "https://open.spotify.com/embed/" + type + "/" + items[i]["id"]);
               row.appendChild(preview_audio);
 
-            document.body.appendChild(row);
+            table_rows.appendChild(row);
           }
+        document.body.appendChild(table_rows);
       }
       else if (type == "playlist") {
         //bah
