@@ -1,3 +1,5 @@
+var iframe_rules = {"width":"300", "height":"80", "frameborder":"0", "allowtransparency":"true","allow":"encrypted-media"};
+
 var handle_button = function(event) {
     console.log("listner triggered");
     var q = encodeURIComponent(document.getElementById("analysis-song-entry").value);
@@ -13,11 +15,12 @@ var handle_button = function(event) {
       data = JSON.parse(request.responseText);
       console.log(data);
 
+      number_of_displayed = 5 // set to 5 because
+
       if (type == "track") {
         items = data["tracks"]["items"]
         table_rows = document.createElement("div");
         table_rows.setAttribute("class", "results_container")
-        number_of_displayed = 5 // set to 5 because
         for (var i = 0; i < number_of_displayed; i++) {
           row = document.createElement("div");
           row.setAttribute("class", "result_row")
@@ -38,12 +41,20 @@ var handle_button = function(event) {
           row.appendChild(album_name);
 
 
-          preview_audio = document.createElement("audio");
-          preview_audio.setAttribute("controls", "");
-          preview_audio_source = document.createElement("source");
-          preview_audio_source.setAttribute("src", items[i]["preview_url"])
-          preview_audio.appendChild(preview_audio_source);
+          //preview_audio = document.createElement("audio");
+          //preview_audio.setAttribute("controls", "");
+          //preview_audio_source = document.createElement("source");
+          //preview_audio_source.setAttribute("src", items[i]["preview_url"])
+          //preview_audio.appendChild(preview_audio_source);
+          //row.appendChild(preview_audio);
+
+          preview_audio = document.createElement("iframe");
+          for (var key in iframe_rules) {
+              preview_audio.setAttribute(key, iframe_rules[key]);
+          }
+          preview_audio.setAttribute("src", "https://open.spotify.com/embed/" + type + "/" + items[i]["id"]);
           row.appendChild(preview_audio);
+
 
           document.body.appendChild(row);
         }
@@ -52,7 +63,32 @@ var handle_button = function(event) {
         //do something else
       }
       else if (type == "album") {
-        //something else again
+          items = data["albums"]["items"];
+          table_rows = document.createElement("div");
+          table_rows.setAttribute("class", "results_container");
+          for (var i = 0; i < number_of_displayed; i++){
+              row = document.createElement("div");
+              row.setAttribute("class", "results_container");
+
+              album_name = document.createElement("p");
+              album_name.appendChild(document.createTextNode("Name: " + items[i]["name"]));
+              row.appendChild(album_name);
+
+              artist_name = document.createElement("p");
+              artist_name.appendChild(document.createTextNode("Artist: " + items[i]["artists"][0]["name"]));
+              row.appendChild(artist_name);
+
+              //maybe a collapsible for track names + analysis darkSlateGray
+              preview_audio = document.createElement("iframe");
+              for(var key in iframe_rules){
+                  preview_audio.setAttribute(key, iframe_rules[key]);
+              }
+              preview_audio.setAttribute("height", "380")
+              preview_audio.setAttribute("src", "https://open.spotify.com/embed/" + type + "/" + items[i]["id"]);
+              row.appendChild(preview_audio);
+
+            document.body.appendChild(row);
+          }
       }
       else if (type == "playlist") {
         //bah
