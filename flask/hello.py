@@ -9,8 +9,8 @@ import urllib.parse
 app = Flask("__name__")
 
 
-@app.route("/analysis/<qt>")
-def analysis(qt):
+@app.route("/search/<qt>")
+def search(qt):
     params = urllib.parse.parse_qs(qt)
 
     q = params["q"]
@@ -19,6 +19,10 @@ def analysis(qt):
     req = pyscripts.query(q, t)
 
     return json.dumps(req)
+
+@app.route("/analysis/<q>")
+def analysis(q):
+    return json.dumps(pyscripts.analysis(q));
 
 @app.route("/analysis.html")
 def analysis_page():
