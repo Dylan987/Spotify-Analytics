@@ -23,8 +23,9 @@ def query(_q, _t):
     return req
 
 
-def analysis(_id):
+def analysis(_ids):
     head = {"Authorization": "Bearer " + get_token()}
-    url = "https://api.spotify.com/v1/audio-features/" + _id
-    req = requests.get(url, headers=head).json()
+    url = "https://api.spotify.com/v1/audio-features/"
+    para = {"ids": _ids}
+    req = requests.get(url, headers=head, params=para).json()
     return req

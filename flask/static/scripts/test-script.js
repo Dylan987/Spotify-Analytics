@@ -6,7 +6,7 @@ var handle_button = function(event) {
     var type = encodeURIComponent(document.getElementById("type-selection").value);
     console.log(type);
     console.log(q);
-    url = "/analysis/" + "q=" + q + "&" + "t=" + type
+    url = "/search/" + "q=" + q + "&" + "t=" + type;
 
     var request = new XMLHttpRequest();
 
@@ -16,6 +16,14 @@ var handle_button = function(event) {
 
       number_of_displayed = Math.min(5, data[type + "s"]["items"].length);  // caps at 5 at
 
+      if (number_of_displayed == 0) {
+        var try_again = document.createElement("p");
+        try_again.appendChild(document.createTextNode("No results to display. Try another search."));
+        var row = document.createElement("div");
+        row.setAttribute("class", "result_row");
+        row.appendChild(try_again);
+        table_rows.appendChild(row);
+    } else {
       //delete any previous searches
       if (document.querySelector(".results_container") !== null) {
         console.log("deleting");
@@ -26,7 +34,28 @@ var handle_button = function(event) {
       table_rows.setAttribute("class", "results_container");
       if (type == "track") {
         var items = data["tracks"]["items"];
+        //here we go
+        var analyses = [];
+        url2 = "/analysis/" + items[0]["id"];
+        for (var i = 1; i < number_of_displayed; i++){
+            url2 += "," + items[i]["id"];
+        }
+        var analysis_request = new XMLHttpRequest();
+        analysis_request.onload = function() {
+            features = JSON.parse(analysis_request.responseText)["audio_features"];
+            for (var analysis in features) {
+                analyses.push(features[analysis]);
+            }
+        }
+        analysis_request.onerror = function() {
+            console.log(request.status);
+        }
+        analysis_request.open("GET", url2, true);
+        analysis_request.send();
+        console.log(analyses);
+        //here we go
         for (var i = 0; i < number_of_displayed; i++) {
+
           var row = document.createElement("div");
           row.setAttribute("class", "result_row");
 
@@ -42,6 +71,16 @@ var handle_button = function(event) {
           album_name.appendChild(document.createTextNode("Album: " + items[i]["album"]["name"]));
           row.appendChild(album_name);
 
+          var the_analysis = document.createElement("ul");
+          the_analysis.appendChild(document.createTextNode("Analysis: "));
+          for (var feature in analyses[i]) {
+              var f = document.createElement("li");
+              console.log(feature);
+              f.appendChild(document.createTextNode(feature + ": " + analyses[i][feature]));
+              the_analysis.appendChild(f);
+          }
+          row.appendChild(the_analysis);
+
           var preview_audio = document.createElement("iframe");
           for (var key in iframe_rules) {
               preview_audio.setAttribute(key, iframe_rules[key]);
@@ -49,7 +88,7 @@ var handle_button = function(event) {
           preview_audio.setAttribute("src", "https://open.spotify.com/embed/" + type + "/" + items[i]["id"]);
           row.appendChild(preview_audio);
 
-          table_rows.appendChild(row)
+          table_rows.appendChild(row);
         }
         document.body.appendChild(table_rows);
       }
@@ -128,15 +167,7 @@ var handle_button = function(event) {
       else {
         console.log("What happened!?")
       }
-      if (number_of_displayed == 0) {
-        var try_again = document.createElement("p");
-        try_again.appendChild(document.createTextNode("no results to display. Try another search"));
-        var row = document.createElement("div");
-        row.setAttribute("class", "result_row");
-        row.appendChild(try_again);
-        table_rows.appendChild(row);
-      }
-
+    }
     };
     request.onerror = function () {
       console.log(request.status);
