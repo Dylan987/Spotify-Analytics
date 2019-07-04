@@ -145,3 +145,19 @@ a:visited {
 a:active {
     text-decoration: none;
 }
+table {
+    align: center;
+}
+table, th, td {
+    border: 1px solid white;
+    border-collapse: collapse;
+    color: white;
+}
+
+th, td {
+    padding: 15px;
+}
+
+td {
+    text-align: left;
+}
