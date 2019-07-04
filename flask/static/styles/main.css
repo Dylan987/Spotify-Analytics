@@ -130,4 +130,11 @@ option {
 }
 .result_row:hover {
   background-color: black;
+  cursor: pointer;
+}
+a:hover {
+    text-decoration: none;
+}
+a:visited {
+    text-decoration: none
 }

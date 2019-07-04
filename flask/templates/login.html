@@ -1,43 +1,14 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="utf-8">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
-        <title>Spotify Analytics - Sign In</title>
-        <script src="/static/scripts/script.js"></script>
-        <link rel="shortcut icon" type="image/png" href="../static/images/favicon.png">
-        <link rel="stylesheet" type="text/css" href="../static/styles/main.css">
-        <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
-    </head>
-    <body>
-        <div class = "nav">
-            <ul>
-                <li>
-                    <a href=home.html>Home</a>
-                </li>
-                <li>
-                    <a href=about.html>About</a>
-                </li>
-                <li>
-                    <a href=analysis.html>Analytics</a>
-                </li>
-                <li>
-                    <a href=playlist-generator.html>Playlist Generator</a>
-                </li>
-                <li>
-                    <a href=contact.html>Contact</a>
-                </li>
-        </ul>
-        </div>
-        <div class = "formbox">
-            <span>Log into your Spotify account</span>
-            <div class="textbox">
-                <input type="text" placeholder="Email Address or Username" name="" value="">
-            </div>
-            <div class="textbox">
-                <input type="password" placeholder="Password" name="" value="">
-            </div>
-            <button id="loginform"> Sign in </button>
-        </div>
-    </body>
-</html>
+{% extends "base.html" %}
+
+{% block content %}
+<div class = "formbox">
+  <span>Log into your Spotify account</span>
+  <div class="textbox">
+    <input type="text" placeholder="Email Address or Username" name="" value="">
+  </div>
+  <div class="textbox">
+    <input type="password" placeholder="Password" name="" value="">
+  </div>
+  <button id="loginform"> Sign in </button>
+</div>
+{% endblock %}
