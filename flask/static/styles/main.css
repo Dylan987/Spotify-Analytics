@@ -132,9 +132,16 @@ option {
   background-color: black;
   cursor: pointer;
 }
+a:link {
+    text-decoration: none;
+    color: white;
+}
 a:hover {
     text-decoration: none;
 }
 a:visited {
-    text-decoration: none
+    text-decoration: none;
+}
+a:active {
+    text-decoration: none;
 }

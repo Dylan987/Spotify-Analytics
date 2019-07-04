@@ -7,11 +7,11 @@
         <link rel="shortcut icon" type="image/png" href="../static/images/favicon.png">
         <link rel="stylesheet" type="text/css" href="../static/styles/main.css">
         <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
-        <title>{{ title }}</title>
+        <title>Spotify Analytics - {% block title %}{% endblock %}</title>
     </head>
     <body>
         <div class="container header-container">
-            <h1> {{ big_header }} </h1>
+          {% block header %}{% endblock %}
         </div>
         <div class = "nav">
           <ul>
@@ -30,8 +30,11 @@
             <li>
               <a href=contact.html>Contact</a>
             </li>
+            <li>
+              <a href=login.html>Log in</a>
+            </li>
           </ul>
         </div>
-        {% block content %} {% endblock %}
+        {% block content %}{% endblock %}
     </body>
 </html>
