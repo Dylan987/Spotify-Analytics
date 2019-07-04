@@ -20,10 +20,6 @@ def search(qt):
 
     return json.dumps(req)
 
-@app.route("/analysis/<q>")
-def analysis(q):
-    return json.dumps(pyscripts.analysis(q));
-
 @app.route("/analysis.html")
 def analysis_page():
     return render_template("analysis.html")
@@ -47,3 +43,14 @@ def generator_page():
 @app.route("/login.html")
 def login_page():
     return render_template("login.html")
+
+@app.route("/analysis/track-<i>")
+def track_analysis(i):
+    features = json.loads(json.dumps(pyscripts.analysis(i)));
+    data = json.loads(json.dumps(pyscripts.get_track(i)));
+    name = data["name"]
+    artists = data["artists"][0]["name"]
+    if len(data["artists"]) > 1:
+        for i in range (1, len(data["artists"])):
+            artists += ", " + data["artists"][i]["name"]
+    return render_template("track-analysis.html", title=i, id=i, name=name, artists=artists, features=features)
