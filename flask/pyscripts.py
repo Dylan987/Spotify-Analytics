@@ -28,3 +28,9 @@ def analysis(_id):
     url = "https://api.spotify.com/v1/audio-features/" + _id
     req = requests.get(url, headers=head).json()
     return req
+
+def get_track(_id):
+    head = {"Authorization": "Bearer " + get_token()}
+    url = "https://api.spotify.com/v1/tracks/" + _id
+    req = requests.get(url, headers=head).json();
+    return req
