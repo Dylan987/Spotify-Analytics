@@ -9,8 +9,8 @@ import urllib.parse
 app = Flask("__name__")
 
 
-@app.route("/analysis/<qt>")
-def analysis(qt):
+@app.route("/search/<qt>")
+def search(qt):
     params = urllib.parse.parse_qs(qt)
 
     q = params["q"]
@@ -35,6 +35,7 @@ def about_page():
 @app.route("/contact.html")
 def contact_page():
     return render_template("contact.html")
+
 @app.route("/playlist-generator.html")
 def generator_page():
     return render_template("playlist-generator.html")
@@ -42,3 +43,14 @@ def generator_page():
 @app.route("/login.html")
 def login_page():
     return render_template("login.html")
+
+@app.route("/analysis/track-<i>")
+def track_analysis(i):
+    features = json.loads(json.dumps(pyscripts.analysis(i)));
+    data = json.loads(json.dumps(pyscripts.get_track(i)));
+    name = data["name"]
+    artists = data["artists"][0]["name"]
+    if len(data["artists"]) > 1:
+        for i in range (1, len(data["artists"])):
+            artists += ", " + data["artists"][i]["name"]
+    return render_template("track-analysis.html", title=i, id=i, name=name, artists=artists, features=features)
