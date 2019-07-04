@@ -26,24 +26,24 @@ def analysis(q):
 
 @app.route("/analysis.html")
 def analysis_page():
-    return render_template("analysis.html", title="Spotify Analytics - Analysis", big_header="Analytics")
+    return render_template("analysis.html")
 
 @app.route("/home.html")
 def home_page():
-    return render_template("home.html", title="Spotify Analytics", big_header="Spotify Analytics")
+    return render_template("home.html")
 
 @app.route("/about.html")
 def about_page():
-    return render_template("about.html", title="Spotify Analytics - About", big_header="About")
+    return render_template("about.html")
 
 @app.route("/contact.html")
 def contact_page():
-    return render_template("contact.html", title="Spotify Analytics - Contact", big_header="Contact")
+    return render_template("contact.html")
 
 @app.route("/playlist-generator.html")
 def generator_page():
-    return render_template("playlist-generator.html", title="Spotify Analytics - Playlist Generator", big_header="Generate Playlist")
+    return render_template("playlist-generator.html")
 
 @app.route("/login.html")
 def login_page():
-    return render_template("login.html", title="Spotify-Analytics - User Authorization", big_header="pls authorize")
+    return render_template("login.html")
