@@ -159,3 +159,18 @@ var handle_button = function(event) {
     request.open("GET", url, true);
     request.send();
 };
+
+$(document).ready(function() { //only runs when the code is ready
+  if (document.getElementById("graph")) { //only runs if there is a "graph" ID on the page
+    var features = JSON.parse(document.getElementById("graph").dataset.features); //get the features into JS
+    console.log(features); // log them
+    var svg = document.createElement("svg"); //create the svg
+    /*
+      use the data here to make a nice svg graph
+    */
+
+
+    document.getElementById("graph").appendChild(svg);
+  }
+
+});
