@@ -46,8 +46,8 @@ def login_page():
 
 @app.route("/analysis/track-<i>")
 def track_analysis(i):
-    features = json.loads(json.dumps(pyscripts.analysis(i)));
-    data = json.loads(json.dumps(pyscripts.get_track(i)));
+    features = pyscripts.analysis(i);
+    data = pyscripts.get_track(i);
     name = data["name"]
     artists = data["artists"][0]["name"]
     if len(data["artists"]) > 1:
