@@ -53,4 +53,4 @@ def track_analysis(i):
     if len(data["artists"]) > 1:
         for i in range (1, len(data["artists"])):
             artists += ", " + data["artists"][i]["name"]
-    return render_template("track-analysis.html", title=i, id=i, name=name, artists=artists, features=features)
+    return render_template("track-analysis.html", title=name, id=i, name=name, artists=artists, features=features)
