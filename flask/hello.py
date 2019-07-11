@@ -49,9 +49,10 @@ def track_analysis(i):
     features = pyscripts.analysis(i);
     features2 = json.dumps(features);
     data = pyscripts.get_track(i);
+    removed = ["track_href", "uri", "type", "analysis_url"]
     name = data["name"]
     artists = data["artists"][0]["name"]
     if len(data["artists"]) > 1:
         for i in range (1, len(data["artists"])):
             artists += ", " + data["artists"][i]["name"]
-    return render_template("track-analysis.html", title=name, id=i, name=name, artists=artists, features=features, features2=features2)
+    return render_template("track-analysis.html", title=name, id=i, name=name, artists=artists, features=features, features2=features2, removed=removed)

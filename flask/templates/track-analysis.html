@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block header %}
-    <h1>{% block title %} {{ title }}{% endblock %}</h1>
+    <h1>{% block title %} {{ title }} {% endblock %}</h1>
 {% endblock %}
 
 {% block content %}
@@ -18,9 +18,11 @@
         <td>Artist(s): {{ artists }}</td>
     </tr>
     {% for feature in features %}
-        <tr>
-            <td> {{ feature }}: {{ features[feature] }}</td>
-        </tr>
+        {% if feature not in removed %}
+            <tr>
+                <td> {{ feature }}: {{ features[feature] }}</td>
+            </tr>
+        {% endif %}
     {% endfor %}
 </table>
 <div id="graph" data-features = "{{ features2 }}">
