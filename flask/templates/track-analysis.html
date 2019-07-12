@@ -17,6 +17,12 @@
     <tr>
         <td>Artist(s): {{ artists }}</td>
     </tr>
+    <tr>
+        <td>Key: {{ key }}</td>
+    </tr>
+    <tr>
+        <td>Beats per bar: {{ time_signature }}</td>
+    </tr>
     {% for feature in features %}
         {% if feature not in removed %}
             <tr>

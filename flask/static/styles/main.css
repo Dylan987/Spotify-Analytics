@@ -149,13 +149,13 @@ table {
     align: center;
 }
 table, th, td {
-    border: 1px solid white;
+    border: none;
     border-collapse: collapse;
     color: white;
 }
 
 th, td {
-    padding: 15px;
+    padding: 5px;
 }
 
 td {
