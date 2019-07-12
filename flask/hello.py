@@ -8,7 +8,6 @@ import urllib.parse
 
 app = Flask("__name__")
 
-
 @app.route("/search/<qt>")
 def search(qt):
     params = urllib.parse.parse_qs(qt)
@@ -49,10 +48,14 @@ def track_analysis(i):
     features = pyscripts.analysis(i);
     features2 = json.dumps(features);
     data = pyscripts.get_track(i);
-    removed = ["track_href", "uri", "type", "analysis_url"]
+    removed = ["track_href", "uri", "type", "analysis_url", "key", "mode", "time_signature"]
+    key = ["C", "C#/Db", "D", "D#/Eb", "E", "F", "F#/Gb", "G", "G#/Ab", "A", "A#/Bb", "B"]
+    mode = ["-", "+"]
+    song_key = key[features["key"]] + mode[features["mode"]]
+    time_signature = features["time_signature"]
     name = data["name"]
     artists = data["artists"][0]["name"]
     if len(data["artists"]) > 1:
         for i in range (1, len(data["artists"])):
             artists += ", " + data["artists"][i]["name"]
-    return render_template("track-analysis.html", title=name, id=i, name=name, artists=artists, features=features, features2=features2, removed=removed)
+    return render_template("track-analysis.html", title=name, id=i, name=name, artists=artists, features=features, features2=features2, key=song_key, time_signature=time_signature, removed=removed)
