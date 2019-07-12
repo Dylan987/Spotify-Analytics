@@ -164,10 +164,35 @@ $(document).ready(function() { //only runs when the code is ready
   if (document.getElementById("graph")) { //only runs if there is a "graph" ID on the page
     var features = JSON.parse(document.getElementById("graph").dataset.features); //get the features into JS
     console.log(features); // log them
+
+    style_chars = {
+      "danceability": features["danceability"],
+      "energy": features["energy"],
+      "valence": features["valence"]
+    };
+
     var svg = document.createElement("svg"); //create the svg
-    /*
-      use the data here to make a nice svg graph
-    */
+    svg.setAttribute("width", "480px");
+    svg.setAttribute("height", "320px");
+    svg.append("<g class='x-axis'></g>"); //make the x-axis
+    svg.append("<g class='y-axis'></g>"); //make the y-axis
+    svg.append("<g class='graph-area'></g>"); // make the graph area
+
+    //x-axis
+
+    //y-axis
+
+    //graph-area
+    for (feature in style_chars) {
+      $(".graph-area").append("<g class='bar'></g>");
+      $(".bar").append("<rect class='bar-rect'></rect>");
+      $(."bar-rect").attr({
+        "width": features[feature]*400 + "px",
+        "height": "50px",
+        "x",
+      })
+    }
+
 
 
     document.getElementById("graph").appendChild(svg);
