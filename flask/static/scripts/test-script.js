@@ -98,6 +98,10 @@ var handle_button = function(event) {
         else if (type == "album") {
           var items = data["albums"]["items"]; //array of album objects
           for (var i = 0; i < number_of_displayed; i++) {
+            //create a link for the table row
+            var link = document.createElement("a");
+            link.setAttribute("href", "/analysis/" + type + "-" + items[i]["id"]);
+
             //create a "row" - a display for a single item
             var row = document.createElement("div");
             row.setAttribute("class", "result_row");
@@ -119,7 +123,9 @@ var handle_button = function(event) {
             preview_audio.setAttribute("src", "https://open.spotify.com/embed/" + type + "/" + items[i]["id"]);
             row.appendChild(preview_audio);
 
-            table_rows.appendChild(row);
+            link.appendChild(row);
+
+            table_rows.appendChild(link);
           }
         }
         else if (type == "playlist") {
@@ -173,4 +179,21 @@ $(document).ready(function() { //only runs when the code is ready
     document.getElementById("graph").appendChild(svg);
   }
 
+});
+
+$(document).ready(function() {
+    if (document.getElementsByClassName("collapsible")){
+        var c = document.getElementsByClassName("collapsible");
+        for (var i = 0; i < c.length; i++){
+            c[i].addEventListener("click", function() {
+                this.classList.toggle("active");
+                var content = this.nextElementSibling;
+                if (content.style.display === "block") {
+                    content.style.display = "none";
+                } else {
+                    content.style.display = "block";
+                }
+            });
+        }
+    }
 });

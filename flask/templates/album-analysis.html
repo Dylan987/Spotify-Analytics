@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block header %}
+    <h1>{% block title %} {{ title }} {% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+    <h3>Album Name: {{ title }}</h3>
+    <h3>Artist(s): {{ artists }}</h3>
+
+    <table style="width: 100%">
+        <tr>
+            <th>Average Track Information/Data</th>
+        </tr>
+        {% for feature in averagefeatures %}
+            <tr>
+                <td>{{ feature }}: {{ averagefeatures[feature] }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+
+    {% for song_features in features %}
+    <button class="collapsible">{{ song_features["name"]}}</button>
+    <div class="content">
+        <table style="width:100%">
+            <tr>
+                <th>Song Features</th>
+            </tr>
+            <tr>
+                <td>Key: {{ song_features["Key"] }}</td>
+            </tr>
+            <tr>
+                <td>Beats per bar: {{ song_features["TS"] }}</td>
+            </tr>
+            {% for feature in song_features %}
+                {% if feature not in removed %}
+                    <tr>
+                        <td> {{ feature }}: {{ song_features[feature] }}</td>
+                    </tr>
+                {% endif %}
+            {% endfor %}
+        </table>
+    </div>
+    {% endfor %}
+
+{% endblock %}
