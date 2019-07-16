@@ -29,8 +29,27 @@ def analysis(_id):
     req = requests.get(url, headers=head).json()
     return req
 
+def multianalysis(_ids):
+    head = {"Authorization": "Bearer " + get_token()}
+    url = "https://api.spotify.com/v1/audio-features"
+    para = {"ids": _ids}
+    req = requests.get(url, headers=head, params=para).json()
+    return req
+
 def get_track(_id):
     head = {"Authorization": "Bearer " + get_token()}
     url = "https://api.spotify.com/v1/tracks/" + _id
+    req = requests.get(url, headers=head).json();
+    return req
+
+def get_album(_id):
+    head = {"Authorization": "Bearer " + get_token()}
+    url = "https://api.spotify.com/v1/albums/" + _id
+    req = requests.get(url, headers=head).json();
+    return req
+
+def get_album_tracks(_id):
+    head = {"Authorization": "Bearer " + get_token()}
+    url = "https://api.spotify.com/v1/albums/" + _id + "/tracks"
     req = requests.get(url, headers=head).json();
     return req
