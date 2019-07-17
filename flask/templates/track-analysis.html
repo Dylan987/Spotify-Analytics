@@ -12,7 +12,10 @@
     </tr>
     <tr>
         <td>Title: {{ name }}</td>
-        <td rowspan="20"></td>
+        <td rowspan="20">
+            <div id="graph" data-features = "{{ features2 }}">
+            </div>
+        </td>
     </tr>
     <tr>
         <td>Artist(s): {{ artists }}</td>
@@ -31,6 +34,5 @@
         {% endif %}
     {% endfor %}
 </table>
-<div id="graph" data-features = "{{ features2 }}">
-</div>
+
 {% endblock %}
