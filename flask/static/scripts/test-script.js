@@ -164,13 +164,139 @@ $(document).ready(function() { //only runs when the code is ready
   if (document.getElementById("graph")) { //only runs if there is a "graph" ID on the page
     var features = JSON.parse(document.getElementById("graph").dataset.features); //get the features into JS
     console.log(features); // log them
-    var svg = document.createElement("svg"); //create the svg
-    /*
-      use the data here to make a nice svg graph
-    */
 
+    var style_chars = {
+      "danceability": features["danceability"],
+      "energy": features["energy"],
+      "valence": features["valence"]
+    };
 
-    document.getElementById("graph").appendChild(svg);
+    canvas = document.createElement("canvas");
+    canvas.setAttribute("width", "480");
+    canvas.setAttribute("height", "320");
+    document.getElementById("graph").appendChild(canvas);
+    if (canvas.getContext) {
+      var ctx = canvas.getContext("2d");
+      //fill bars and text
+
+      //create the bar object:
+      function Bar(char, value, x, y, width, height) {
+        this.char = char;
+        this.value = value;
+        this.x = x;
+        this.y = y;
+        this.width = width;
+        this.height = height;
+        this.hovered = false;
+        this.isInside = function (mx, my) {
+          if (mx < this.x) {
+            return false;
+          }
+          else if (mx > this.x + this.width) {
+            return false;
+          }
+          else if (my < this.y) {
+            return false;
+          }
+          else if (my > this.y + this.height) {
+            return false;
+          }
+          else {
+            return true;
+          }
+        };
+        this.draw = function (ctx) {
+          ctx.font = "14px sans-serif";
+          if (this.hovered) {
+            ctx.fillStyle = "#52d98f";
+          }
+          else {
+            ctx.fillStyle = "mediumSeaGreen";
+          }
+          ctx.fillRect(this.x, this.y, this.width, this.height);
+          var txt = this.char + ": " + this.value;
+          ctx.fillStyle = "white";
+          ctx.fillText(txt, this.x + 5, this.y + 30);
+        }
+      }
+      //creat the graph object
+      function Graph(dataset, ctx) {
+        ctx.clearRect(0, 0, 480, 320); //clear the canvas
+        this.dataset = dataset;
+        this.bars = [];
+        var i = 0;
+        for (char in dataset) {
+          var a = new Bar(char, dataset[char], 40, 80 + 55 * i, dataset[char] * 400, 50);
+          this.bars.push(a);
+          i++;
+        }
+        this.draw = function () {
+          //clear the Canvas
+          ctx.clearRect(0, 0, 480, 320);
+          //the title
+          ctx.font = "22pt sans-serif";
+          ctx.fillStyle = "white";
+          ctx.fillText("{Song Title}", 160, 60);
+          //the bars
+          for (var i = 0; i < this.bars.length; i++) {
+            this.bars[i].draw(ctx);
+          }
+          //the axis
+          //vertical (catergory axis):
+          ctx.strokeStyle = "white";
+          ctx.beginPath();
+          ctx.moveTo(40, 20);
+          ctx.lineTo(40, 260);
+          ctx.moveTo(40, 20);
+          ctx.lineTo(30, 30);
+          ctx.moveTo(40, 20);
+          ctx.lineTo(50, 30);
+          ctx.stroke();
+          //horizontal (value) axis
+          ctx.beginPath();
+          ctx.moveTo(40, 260);
+          ctx.lineTo(460, 260);
+          ctx.lineTo(450, 270);
+          ctx.moveTo(460, 260);
+          ctx.lineTo(450, 250);
+          ctx.stroke();
+          //ticks
+          ctx.beginPath();
+          for (var i = 0; i < 10; i++) {
+            ctx.moveTo(40 + (i + 1) * 40, 260);
+            ctx.lineTo(40 + (i + 1) * 40, 270);
+            ctx.font = "12px sans-serif"
+            ctx.fillStyle = "white";
+            if (i < 9) {
+              ctx.fillText("0." + (i + 1), 30 + (i + 1) * 40, 290);
+            }
+            else {
+              ctx.fillText("1.0", 30 + (i + 1) * 40, 290)
+            }
+
+          }
+          ctx.stroke();
+        };
+        this.mousemove = function(mx, my) {
+          for (var i = 0; i < this.bars.length; i++) {
+            if (this.bars[i].isInside(mx, my)){
+              this.bars[i].hovered = true;
+            }
+            else {
+              this.bars[i].hovered = false;
+            }
+          }
+          this.draw();
+        };
+      }
+
+      var g = new Graph(style_chars, ctx);
+      g.draw();
+
+      canvas.addEventListener("mousemove", function(e) {
+        var rect = canvas.getBoundingClientRect();
+        g.mousemove(e.clientX - rect.left, e.clientY - rect.top);
+      });
+    }
   }
-
 });
