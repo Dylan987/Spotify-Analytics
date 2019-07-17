@@ -161,3 +161,6 @@ th, td {
 td {
     text-align: left;
 }
+table td[rowspan] {
+  vertical-align: top;
+}
