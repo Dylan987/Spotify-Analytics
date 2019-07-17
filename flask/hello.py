@@ -66,6 +66,7 @@ def album_analysis(i):
     album = pyscripts.get_album(i)
     name = album["name"]
     artists = album["artists"][0]["name"]
+    audio_preview_link = "https://open.spotify.com/embed/album/" + i
     if len(album["artists"]) > 1:
         for i in range(1, len(album["artists"])):
             artists += ", " + album["artists"][i]["name"]
@@ -95,4 +96,4 @@ def album_analysis(i):
         track = pyscripts.get_track(feature["id"])
         feature.update(name = track["name"])
     removed = ["track_href", "uri", "type", "analysis_url", "key", "mode", "id", "TS", "time_signature", "Key"]
-    return render_template("album-analysis.html", title=name, artists=artists, id=i, ids=ids, features=features, averagefeatures=averagefeatures, album=albumtracks, removed=removed)
+    return render_template("album-analysis.html", title=name, artists=artists, id=i, ids=ids, features=features, averagefeatures=averagefeatures, album=albumtracks, removed=removed, audio_preview_link=audio_preview_link)

@@ -190,3 +190,7 @@ h3 {
     overflow: hidden;
     background-color: black;
 }
+
+iframe {
+    padding: 0px;
+}

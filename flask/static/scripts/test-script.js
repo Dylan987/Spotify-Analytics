@@ -181,6 +181,7 @@ $(document).ready(function() { //only runs when the code is ready
 
 });
 
+//so collapsibles in analytics (and maybe other places) work
 $(document).ready(function() {
     if (document.getElementsByClassName("collapsible")){
         var c = document.getElementsByClassName("collapsible");
