@@ -50,6 +50,7 @@ def get_album(_id):
 
 def get_album_tracks(_id):
     head = {"Authorization": "Bearer " + get_token()}
+    para = {"limit": "50"}
     url = "https://api.spotify.com/v1/albums/" + _id + "/tracks"
-    req = requests.get(url, headers=head).json();
+    req = requests.get(url, headers=head, params=para).json();
     return req
