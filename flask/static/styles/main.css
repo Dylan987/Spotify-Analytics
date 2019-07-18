@@ -161,6 +161,39 @@ th, td {
 td {
     text-align: left;
 }
+
 table td[rowspan] {
   vertical-align: top;
+
+h3 {
+    text-align: center;
+    color: white;
+
+}
+
+.collapsible {
+    background-color: gray;
+    color: white;
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 16px;
+}
+
+.active {
+    background-color: mediumSeaGreen;
+}
+
+.content {
+    padding: 0 18px;
+    display: none;
+    overflow: hidden;
+    background-color: black;
+}
+
+iframe {
+    padding: 0px;
 }
