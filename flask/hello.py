@@ -95,5 +95,5 @@ def album_analysis(i):
         feature.update(TS = feature["time_signature"])
         track = pyscripts.get_track(feature["id"])
         feature.update(name = track["name"])
-    removed = ["track_href", "uri", "type", "analysis_url", "key", "mode", "id", "TS", "time_signature", "Key"]
+    removed = ["track_href", "uri", "type", "analysis_url", "key", "mode", "id", "TS", "time_signature", "Key", "name"]
     return render_template("album-analysis.html", title=name, artists=artists, id=i, ids=ids, features=features, averagefeatures=averagefeatures, album=albumtracks, removed=removed, audio_preview_link=audio_preview_link)
