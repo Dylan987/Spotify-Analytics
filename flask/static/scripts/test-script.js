@@ -171,11 +171,10 @@ $(document).ready(function() { //only runs when the code is ready
     var features = JSON.parse(document.getElementById("graph").dataset.features); //get the features into JS
     console.log(features); // log them
 
-    var style_chars = {
-      "danceability": features["danceability"],
-      "energy": features["energy"],
-      "valence": features["valence"]
-    };
+    var style_chars = {};
+    for (element in features) {
+        style_chars[element] = features[element];
+    }
 
     canvas = document.createElement("canvas");
     canvas.setAttribute("width", "480");
@@ -242,7 +241,7 @@ $(document).ready(function() { //only runs when the code is ready
           //the title
           ctx.font = "22pt sans-serif";
           ctx.fillStyle = "white";
-          ctx.fillText("{Song Title}", 160, 60);
+          //ctx.fillText("{Song Title}", 160, 60);
           //the bars
           for (var i = 0; i < this.bars.length; i++) {
             this.bars[i].draw(ctx);

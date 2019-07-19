@@ -46,9 +46,13 @@ def login_page():
 @app.route("/analysis/track-<i>")
 def track_analysis(i):
     features = pyscripts.analysis(i)
-    features2 = json.dumps(features)
+    features2 = pyscripts.analysis(i)
     data = pyscripts.get_track(i)
-    removed = ["track_href", "uri", "type", "analysis_url", "key", "mode", "time_signature"]
+    removed = ["track_href", "uri", "type", "analysis_url", "key", "mode", "time_signature", "id"]
+    removed2 = ["track_href", "uri", "type", "analysis_url", "key", "mode", "time_signature", "id", "tempo", "duration_ms", "loudness"]
+    for element in removed2:
+        del features2[element]
+    features2 = json.dumps(features2)
     key = ["C", "C#/Db", "D", "D#/Eb", "E", "F", "F#/Gb", "G", "G#/Ab", "A", "A#/Bb", "B"]
     mode = ["-", "+"]
     song_key = key[features["key"]] + mode[features["mode"]]
