@@ -69,27 +69,30 @@ def album_analysis(i):
     #basic information
     album = pyscripts.get_album(i)
     name = album["name"]
-    artists = album["artists"][0]["name"]
+    artists = album["artists"][0]["name"] # becomes a comma seperated string of the artists
     audio_preview_link = "https://open.spotify.com/embed/album/" + i
     if len(album["artists"]) > 1:
         for i in range(1, len(album["artists"])):
             artists += ", " + album["artists"][i]["name"]
     #gather ids for analysis
     albumtracks = pyscripts.get_album_tracks(i)
-    ids = albumtracks["items"][0]["id"]
+    ids = albumtracks["items"][0]["id"]  # becomes a comma seperated string of song IDs
     if len(albumtracks["items"]) > 1:
         for i in range(1, len(albumtracks["items"])):
             ids += "," + albumtracks["items"][i]["id"]
-    features = pyscripts.multianalysis(ids)["audio_features"]
+    features = pyscripts.multianalysis(ids)["audio_features"] # this is a list of song feature dictionaries
     #averages track features for the album by summing each value then dividing by the length of the album
     averageremoved = ["track_href", "uri", "type", "analysis_url", "key", "mode", "time_signature", "id"]
     averagefeatures = {"danceability": 0, "energy": 0, "loudness": 0, "speechiness": 0, "acousticness": 0, "instrumentalness": 0, "liveness": 0, "valence": 0, "tempo": 0, "duration_ms": 0}
-    for song_features in features:
-        for feature in song_features:
-            if feature not in averageremoved:
+    for song_features in features:  # for each tracks
+        for feature in song_features:  # for each feature
+            if feature not in averageremoved:  # if the feature is not to be removed
                 averagefeatures[feature] += song_features[feature]
     for feature in averagefeatures:
         averagefeatures[feature] /= album["total_tracks"]
+        averagefeatures[feature] = round(averagefeatures[feature], 3)
+
+    averagefeatures2 = json.dumps(averagefeatures)
     #individual track analyses copied and pasted from track_analysis
     key = ["C", "C#/Db", "D", "D#/Eb", "E", "F", "F#/Gb", "G", "G#/Ab", "A", "A#/Bb", "B"]
     mode = ["-", "+"]
@@ -100,4 +103,4 @@ def album_analysis(i):
         track = pyscripts.get_track(feature["id"])
         feature.update(name = track["name"])
     removed = ["track_href", "uri", "type", "analysis_url", "key", "mode", "id", "TS", "time_signature", "Key", "name"]
-    return render_template("album-analysis.html", title=name, artists=artists, id=i, ids=ids, features=features, averagefeatures=averagefeatures, album=albumtracks, removed=removed, audio_preview_link=audio_preview_link)
+    return render_template("album-analysis.html", title=name, artists=artists, id=i, ids=ids, features=features, averagefeatures=averagefeatures, averagefeatures2=averagefeatures2, album=albumtracks, removed=removed, audio_preview_link=audio_preview_link)

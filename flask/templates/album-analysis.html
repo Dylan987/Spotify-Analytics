@@ -20,7 +20,10 @@
         <tr>
             <td rowspan="11"><iframe src="{{ audio_preview_link }}" width="300" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
             <td><!--blank--></td>
-            <td rowspan = "11"><!--probably the graph of averages--></td>
+            <td rowspan = "11">
+              <div id = "graph" data-features = "{{ averagefeatures2 }}""></div>
+              <div id = "graph2" data-features = "{{ averagefeatures2 }}""></div>
+            </td>
         </tr>
         {% for feature in averagefeatures %}
             <tr>
