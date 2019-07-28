@@ -167,159 +167,185 @@ var handle_button = function(event) {
 };
 
 $(document).ready(function() { //only runs when the code is ready
+
+  //collapsibles code
+  if (document.getElementsByClassName("collapsible")){
+      var c = document.getElementsByClassName("collapsible");
+      console.log(c);
+      for (var i = 0; i < c.length; i++){
+          c[i].addEventListener("click", function() {
+              this.classList.toggle("active");
+              var content = this.nextElementSibling;
+              if (content.style.display === "block") {
+                  content.style.display = "none";
+              } else {
+                  content.style.display = "block";
+              }
+          });
+      }
+  }
+
+
   if (document.getElementById("graph")) { //only runs if there is a "graph" ID on the page
     var features = JSON.parse(document.getElementById("graph").dataset.features); //get the features into JS
     console.log(features); // log them
 
-    var style_chars = {};
-    for (element in features) {
-        style_chars[element] = features[element];
+    var style_chars = {
+      "danceability": features["danceability"],
+      "energy": features["energy"],
+      "valence": features["valence"]
+    };
+
+    var instrumental_chars = {
+      "acousticness": features["acousticness"],
+      "liveness": features["liveness"],
+      "instrumentalness": features["instrumentalness"],
+      "speechiness": features["speechiness"]
+    };
+
+    //graph object definitions
+    //create the bar object:
+    function Bar(char, value, x, y, width, height) {
+      this.char = char;
+      this.value = value;
+      this.x = x;
+      this.y = y;
+      this.width = width;
+      this.height = height;
+      this.hovered = false;
+      this.isInside = function (mx, my) {
+        if (mx < this.x) {
+          return false;
+        }
+        else if (mx > this.x + this.width) {
+          return false;
+        }
+        else if (my < this.y) {
+          return false;
+        }
+        else if (my > this.y + this.height) {
+          return false;
+        }
+        else {
+          return true;
+        }
+      };
+      this.draw = function (ctx) {
+        ctx.font = "14px sans-serif";
+        if (this.hovered) {
+          ctx.fillStyle = "#52d98f";
+        }
+        else {
+          ctx.fillStyle = "mediumSeaGreen";
+        }
+        ctx.fillRect(this.x, this.y, this.width, this.height);
+        var txt = this.char + ": " + this.value;
+        ctx.fillStyle = "white";
+        ctx.fillText(txt, this.x + 5, this.y + 30);
+      }
+    }
+    //create the graph object
+    function Graph(dataset, ctx, width, height) {
+      ctx.clearRect(0, 0, width, height); //clear the canvas
+      this.dataset = dataset;
+      this.bars = [];
+      var spacing_factor = Math.floor(200 / Object.keys(this.dataset).length)
+      var i = 0;
+      for (char in dataset) {
+        var a = new Bar(char, dataset[char], 40, 60 + spacing_factor * i, dataset[char] * 400, spacing_factor - 5);
+        this.bars.push(a);
+        i++;
+      }
+      this.draw = function () {
+        //clear the Canvas
+        ctx.clearRect(0, 0, 480, 320);
+        //the title
+        ctx.font = "22pt sans-serif";
+        ctx.fillStyle = "white";
+        //ctx.fillText("{Song Title}", 160, 60);
+        //the bars
+        for (var i = 0; i < this.bars.length; i++) {
+          this.bars[i].draw(ctx);
+        }
+        //the axis
+        //vertical (catergory axis):
+        ctx.strokeStyle = "white";
+        ctx.beginPath();
+        ctx.moveTo(40, 20);
+        ctx.lineTo(40, 260);
+        ctx.moveTo(40, 20);
+        ctx.lineTo(30, 30);
+        ctx.moveTo(40, 20);
+        ctx.lineTo(50, 30);
+        ctx.stroke();
+        //horizontal (value) axis
+        ctx.beginPath();
+        ctx.moveTo(40, 260);
+        ctx.lineTo(460, 260);
+        ctx.lineTo(450, 270);
+        ctx.moveTo(460, 260);
+        ctx.lineTo(450, 250);
+        ctx.stroke();
+        //ticks
+        ctx.beginPath();
+        for (var i = 0; i < 10; i++) {
+          ctx.moveTo(40 + (i + 1) * 40, 260);
+          ctx.lineTo(40 + (i + 1) * 40, 270);
+          ctx.font = "12px sans-serif"
+          ctx.fillStyle = "white";
+          if (i < 9) {
+            ctx.fillText("0." + (i + 1), 30 + (i + 1) * 40, 290);
+          }
+          else {
+            ctx.fillText("1.0", 30 + (i + 1) * 40, 290)
+          }
+
+        }
+        ctx.stroke();
+      };
+      this.mousemove = function(mx, my) {
+        for (var i = 0; i < this.bars.length; i++) {
+          if (this.bars[i].isInside(mx, my)){
+            this.bars[i].hovered = true;
+          }
+          else {
+            this.bars[i].hovered = false;
+          }
+        }
+        this.draw();
+      };
     }
 
-    canvas = document.createElement("canvas");
+    // the first graph
+    let canvas = document.createElement("canvas");
     canvas.setAttribute("width", "480");
     canvas.setAttribute("height", "320");
     document.getElementById("graph").appendChild(canvas);
     if (canvas.getContext) {
-      var ctx = canvas.getContext("2d");
-      //fill bars and text
+      let ctx = canvas.getContext("2d");
 
-      //create the bar object:
-      function Bar(char, value, x, y, width, height) {
-        this.char = char;
-        this.value = value;
-        this.x = x;
-        this.y = y;
-        this.width = width;
-        this.height = height;
-        this.hovered = false;
-        this.isInside = function (mx, my) {
-          if (mx < this.x) {
-            return false;
-          }
-          else if (mx > this.x + this.width) {
-            return false;
-          }
-          else if (my < this.y) {
-            return false;
-          }
-          else if (my > this.y + this.height) {
-            return false;
-          }
-          else {
-            return true;
-          }
-        };
-        this.draw = function (ctx) {
-          ctx.font = "14px sans-serif";
-          if (this.hovered) {
-            ctx.fillStyle = "#52d98f";
-          }
-          else {
-            ctx.fillStyle = "mediumSeaGreen";
-          }
-          ctx.fillRect(this.x, this.y, this.width, this.height);
-          var txt = this.char + ": " + this.value;
-          ctx.fillStyle = "white";
-          ctx.fillText(txt, this.x + 5, this.y + 30);
-        }
-      }
-      //creat the graph object
-      function Graph(dataset, ctx) {
-        ctx.clearRect(0, 0, 480, 320); //clear the canvas
-        this.dataset = dataset;
-        this.bars = [];
-        var i = 0;
-        for (char in dataset) {
-          var a = new Bar(char, dataset[char], 40, 80 + 55 * i, dataset[char] * 400, 50);
-          this.bars.push(a);
-          i++;
-        }
-        this.draw = function () {
-          //clear the Canvas
-          ctx.clearRect(0, 0, 480, 320);
-          //the title
-          ctx.font = "22pt sans-serif";
-          ctx.fillStyle = "white";
-          //ctx.fillText("{Song Title}", 160, 60);
-          //the bars
-          for (var i = 0; i < this.bars.length; i++) {
-            this.bars[i].draw(ctx);
-          }
-          //the axis
-          //vertical (catergory axis):
-          ctx.strokeStyle = "white";
-          ctx.beginPath();
-          ctx.moveTo(40, 20);
-          ctx.lineTo(40, 260);
-          ctx.moveTo(40, 20);
-          ctx.lineTo(30, 30);
-          ctx.moveTo(40, 20);
-          ctx.lineTo(50, 30);
-          ctx.stroke();
-          //horizontal (value) axis
-          ctx.beginPath();
-          ctx.moveTo(40, 260);
-          ctx.lineTo(460, 260);
-          ctx.lineTo(450, 270);
-          ctx.moveTo(460, 260);
-          ctx.lineTo(450, 250);
-          ctx.stroke();
-          //ticks
-          ctx.beginPath();
-          for (var i = 0; i < 10; i++) {
-            ctx.moveTo(40 + (i + 1) * 40, 260);
-            ctx.lineTo(40 + (i + 1) * 40, 270);
-            ctx.font = "12px sans-serif"
-            ctx.fillStyle = "white";
-            if (i < 9) {
-              ctx.fillText("0." + (i + 1), 30 + (i + 1) * 40, 290);
-            }
-            else {
-              ctx.fillText("1.0", 30 + (i + 1) * 40, 290)
-            }
-
-          }
-          ctx.stroke();
-        };
-        this.mousemove = function(mx, my) {
-          for (var i = 0; i < this.bars.length; i++) {
-            if (this.bars[i].isInside(mx, my)){
-              this.bars[i].hovered = true;
-            }
-            else {
-              this.bars[i].hovered = false;
-            }
-          }
-          this.draw();
-        };
-      }
-
-      var g = new Graph(style_chars, ctx);
-      g.draw();
-
+      let style_g = new Graph(style_chars, ctx);
+      style_g.draw();
       canvas.addEventListener("mousemove", function(e) {
         var rect = canvas.getBoundingClientRect();
-        g.mousemove(e.clientX - rect.left, e.clientY - rect.top);
+        style_g.mousemove(e.clientX - rect.left, e.clientY - rect.top);
+      });
+    }
+
+    //the second graph
+    let canvas2 = document.createElement("canvas");
+    canvas2.setAttribute("width", "480");
+    canvas2.setAttribute("height", "320");
+    document.getElementById("graph2").appendChild(canvas2);
+    if (canvas2.getContext) {
+      let ctx = canvas2.getContext("2d");
+
+      let instrumental_g = new Graph(instrumental_chars, ctx);
+      instrumental_g.draw();
+      canvas2.addEventListener("mousemove", function(e) {
+        var rect = canvas2.getBoundingClientRect();
+        instrumental_g.mousemove(e.clientX - rect.left, e.clientY - rect.top);
       });
     }
   }
-});
-
-//so collapsibles in analytics (and maybe other places) work
-$(document).ready(function() {
-    if (document.getElementsByClassName("collapsible")){
-        var c = document.getElementsByClassName("collapsible");
-        for (var i = 0; i < c.length; i++){
-            c[i].addEventListener("click", function() {
-                this.classList.toggle("active");
-                var content = this.nextElementSibling;
-                if (content.style.display === "block") {
-                    content.style.display = "none";
-                } else {
-                    content.style.display = "block";
-                }
-            });
-        }
-    }
 });
