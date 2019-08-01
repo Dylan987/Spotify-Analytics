@@ -81,6 +81,7 @@ def album_analysis(i):
         for i in range(1, len(albumtracks["items"])):
             ids += "," + albumtracks["items"][i]["id"]
     features = pyscripts.multianalysis(ids)["audio_features"] # this is a list of song feature dictionaries
+    features2 = json.dumps(features)
     #averages track features for the album by summing each value then dividing by the length of the album
     averageremoved = ["track_href", "uri", "type", "analysis_url", "key", "mode", "time_signature", "id"]
     averagefeatures = {"danceability": 0, "energy": 0, "loudness": 0, "speechiness": 0, "acousticness": 0, "instrumentalness": 0, "liveness": 0, "valence": 0, "tempo": 0, "duration_ms": 0}
@@ -103,4 +104,4 @@ def album_analysis(i):
         track = pyscripts.get_track(feature["id"])
         feature.update(name = track["name"])
     removed = ["track_href", "uri", "type", "analysis_url", "key", "mode", "id", "TS", "time_signature", "Key", "name"]
-    return render_template("album-analysis.html", title=name, artists=artists, id=i, ids=ids, features=features, averagefeatures=averagefeatures, averagefeatures2=averagefeatures2, album=albumtracks, removed=removed, audio_preview_link=audio_preview_link)
+    return render_template("album-analysis.html", title=name, artists=artists, id=i, ids=ids, features=features, features2=features2, averagefeatures=averagefeatures, averagefeatures2=averagefeatures2, album=albumtracks, removed=removed, audio_preview_link=audio_preview_link)
