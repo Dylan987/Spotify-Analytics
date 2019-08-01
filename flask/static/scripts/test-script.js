@@ -171,7 +171,6 @@ $(document).ready(function() { //only runs when the code is ready
   //collapsibles code
   if (document.getElementsByClassName("collapsible")){
       var c = document.getElementsByClassName("collapsible");
-      console.log(c);
       for (var i = 0; i < c.length; i++){
           c[i].addEventListener("click", function() {
               this.classList.toggle("active");
@@ -186,23 +185,8 @@ $(document).ready(function() { //only runs when the code is ready
   }
 
 
-  if (document.getElementById("graph")) { //only runs if there is a "graph" ID on the page
-    var features = JSON.parse(document.getElementById("graph").dataset.features); //get the features into JS
-    console.log(features); // log them
-
-    var style_chars = {
-      "danceability": features["danceability"],
-      "energy": features["energy"],
-      "valence": features["valence"]
-    };
-
-    var instrumental_chars = {
-      "acousticness": features["acousticness"],
-      "liveness": features["liveness"],
-      "instrumentalness": features["instrumentalness"],
-      "speechiness": features["speechiness"]
-    };
-
+  if (document.getElementsByClassName("graph")) { //only runs if there is a "graph" ID on the page
+    let graphs = document.getElementsByClassName("graph");
     //graph object definitions
     //create the bar object:
     function Bar(char, value, x, y, width, height) {
@@ -315,6 +299,58 @@ $(document).ready(function() { //only runs when the code is ready
         this.draw();
       };
     }
+
+    for (var i = 0; i < graphs.length; i++) {
+      let features;
+      if (graphs[i].hasAttribute("list")) { //if the element is one of many in a collection
+        features = JSON.parse(graphs[i].dataset.features)[i - 1]; //the -1 corrects for the average at the top
+      } else {
+        features = JSON.parse(graphs[i].dataset.features);
+      }
+      let style_chars = {
+        "danceability": features["danceability"],
+        "energy": features["energy"],
+        "valence": features["valence"]
+      };
+      let instrumental_chars = {
+        "acousticness": features["acousticness"],
+        "liveness": features["liveness"],
+        "instrumentalness": features["instrumentalness"],
+        "speechiness": features["speechiness"]
+      };
+
+      let canvas1 = document.createElement("canvas");
+      graphs[i].appendChild(canvas1);
+      canvas1.setAttribute("width", "480");
+      canvas1.setAttribute("height", "320");
+      if (canvas1.getContext) {
+        let ctx = canvas1.getContext("2d");
+        let style_g = new Graph(style_chars, ctx);
+        style_g.draw();
+        canvas1.addEventListener("mousemove", function(e) {
+          var rect = canvas1.getBoundingClientRect();
+          style_g.mousemove(e.clientX - rect.left, e.clientY - rect.top);
+        });
+      }
+
+      let canvas2 = document.createElement("canvas");
+      graphs[i].appendChild(canvas2);
+      canvas2.setAttribute("width", "480");
+      canvas2.setAttribute("height", "320");
+      if (canvas2.getContext) {
+        let ctx = canvas2.getContext("2d");
+        let instrumental_g = new Graph(instrumental_chars, ctx);
+        instrumental_g.draw();
+        canvas2.addEventListener("mousemove", function(e) {
+          var rect = canvas2.getBoundingClientRect();
+          instrumental_g.mousemove(e.clientX - rect.left, e.clientY - rect.top);
+        });
+      }
+    }
+
+
+
+
 
     // the first graph
     let canvas = document.createElement("canvas");

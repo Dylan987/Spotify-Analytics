@@ -21,8 +21,8 @@
             <td rowspan="11"><iframe src="{{ audio_preview_link }}" width="300" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
             <td><!--blank--></td>
             <td rowspan = "11">
-              <div id = "graph" data-features = "{{ averagefeatures2 }}""></div>
-              <div id = "graph2" data-features = "{{ averagefeatures2 }}""></div>
+              <div class = "graph" data-features = "{{ averagefeatures2 }}">
+              </div>
             </td>
         </tr>
         {% for feature in averagefeatures %}
@@ -41,6 +41,10 @@
             </tr>
             <tr>
                 <td>Key: {{ song_features["Key"] }}</td>
+                <td rowspan="10">
+                  <div class="graph" data-features = "{{ features2 }}" list> <!--tells the JS that this is one element of a collection-->
+                  </div>
+                </td>
             </tr>
             <tr>
                 <td>Beats per bar: {{ song_features["TS"] }}</td>
