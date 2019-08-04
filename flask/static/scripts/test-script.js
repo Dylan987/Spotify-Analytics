@@ -347,41 +347,5 @@ $(document).ready(function() { //only runs when the code is ready
         });
       }
     }
-
-
-
-
-
-    // the first graph
-    let canvas = document.createElement("canvas");
-    canvas.setAttribute("width", "480");
-    canvas.setAttribute("height", "320");
-    document.getElementById("graph").appendChild(canvas);
-    if (canvas.getContext) {
-      let ctx = canvas.getContext("2d");
-
-      let style_g = new Graph(style_chars, ctx);
-      style_g.draw();
-      canvas.addEventListener("mousemove", function(e) {
-        var rect = canvas.getBoundingClientRect();
-        style_g.mousemove(e.clientX - rect.left, e.clientY - rect.top);
-      });
-    }
-
-    //the second graph
-    let canvas2 = document.createElement("canvas");
-    canvas2.setAttribute("width", "480");
-    canvas2.setAttribute("height", "320");
-    document.getElementById("graph2").appendChild(canvas2);
-    if (canvas2.getContext) {
-      let ctx = canvas2.getContext("2d");
-
-      let instrumental_g = new Graph(instrumental_chars, ctx);
-      instrumental_g.draw();
-      canvas2.addEventListener("mousemove", function(e) {
-        var rect = canvas2.getBoundingClientRect();
-        instrumental_g.mousemove(e.clientX - rect.left, e.clientY - rect.top);
-      });
-    }
   }
 });
