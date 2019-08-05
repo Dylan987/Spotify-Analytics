@@ -7,10 +7,25 @@
 {% block content %}
 <div class="grid-container">
   <div class="grid-item left-bar">
+    <div class="similar-songs">
+      <h3>Similar Songs</h3>
+      {% for song in similar_songs %}
+      <a href="track-{{ song['id'] }}">
+        <div class="similar-song-container">
+          <iframe src="https://open.spotify.com/embed/track/{{ song['id'] }}" width="300" height="80" frameborder="0" allowtransparency="true" allow="encrypted-media">
+          </iframe>
+        </div>
+      </a>
+      {% else %}
+      <p>No similar songs</p>
+      {% endfor %}
+    </div>
   </div>
   <div class="grid-item basic-data info-box">
     <p class="info-para"><strong>Title:</strong> {{ name }} </p>
     <p class="info-para"><strong>Artist(s):</strong> {{ artists }} </p>
+    <iframe src="https://open.spotify.com/embed/track/{{ id }}" width="300" height="80" frameborder="0" allowtransparency="true" allow="encrypted-media">
+    </iframe>
   </div>
   <div class="grid-item advanced-data info-box">
     <p class="info-para"><strong>Key:</strong> {{ key }}</p>
