@@ -5,34 +5,22 @@
 {% endblock %}
 
 {% block content %}
-<table style="width:100%">
-    <tr>
-        <th>Song Information/Data</th>
-        <th>Song Features</th>
-    </tr>
-    <tr>
-        <td>Title: {{ name }}</td>
-        <td rowspan="20">
-            <div class="graph" data-features = "{{ features2 }}">
-            </div>
-        </td>
-    </tr>
-    <tr>
-        <td>Artist(s): {{ artists }}</td>
-    </tr>
-    <tr>
-        <td>Key: {{ key }}</td>
-    </tr>
-    <tr>
-        <td>Beats per bar: {{ time_signature }}</td>
-    </tr>
-    {% for feature in features %}
-        {% if feature not in removed %}
-            <tr>
-                <td> {{ feature }}: {{ features[feature] }}</td>
-            </tr>
-        {% endif %}
-    {% endfor %}
-</table>
+<div class="grid-container">
+  <div class="grid-item left-bar">
+  </div>
+  <div class="grid-item basic-data info-box">
+    <p class="info-para"><strong>Title:</strong> {{ name }} </p>
+    <p class="info-para"><strong>Artist(s):</strong> {{ artists }} </p>
+  </div>
+  <div class="grid-item advanced-data info-box">
+    <p class="info-para"><strong>Key:</strong> {{ key }}</p>
+    <p class="info-para"><strong>Tempo:</strong> {{ features["tempo"] }} bpm</p>
+    <p class="info-para"><strong>Beats per Bar:</strong> {{ time_signature }}</p>
+    <p class="info-para"><strong>Duration:</strong> {{ features["duration_ms"]//60000 }}:{{ (features["duration_ms"] % 60000) // 1000 }}</p>
+    <p class="info-para"><strong>Average Loudness:</strong> {{ features["loudness"] }} dB</p>
+  </div>
+  <div class="grid-item graph" data-features="{{ features2 }}">
+  </div>
+</div>
 
 {% endblock %}
