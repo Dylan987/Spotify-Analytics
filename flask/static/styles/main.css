@@ -194,6 +194,7 @@ h3 {
 
 iframe {
     padding: 0px;
+    display: block;
 }
 
 /* Styles for the grid-style rework */
@@ -218,14 +219,21 @@ iframe {
 .graph {
   grid-area: chart;
 }
-.basic-data, .advanced-data, .graph {
+.grid-item {
   border: 2px solid mediumSeaGreen;
   border-radius: 10px;
   box-shadow: 3px 3px 5px black;
+}
+.grid-item p, .grid-item iframe {
+  padding: 10px;
 }
 canvas {
   display: block;
 }
 .info-para {
   padding: 10px;
+}
+.similar-song-container:hover {
+  background-color: black;
+  transition: 200ms;
 }

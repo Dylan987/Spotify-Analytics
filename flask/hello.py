@@ -45,6 +45,7 @@ def login_page():
 
 @app.route("/analysis/track-<i>")
 def track_analysis(i):
+    similar_songs = pyscripts.get_similar_songs(i)['tracks']
     features = pyscripts.analysis(i)
     features2 = pyscripts.analysis(i)
     data = pyscripts.get_track(i)
@@ -62,7 +63,7 @@ def track_analysis(i):
     if len(data["artists"]) > 1:
         for i in range (1, len(data["artists"])):
             artists += ", " + data["artists"][i]["name"]
-    return render_template("track-analysis.html", title=name, id=i, name=name, artists=artists, features=features, features2=features2, key=song_key, time_signature=time_signature, removed=removed)
+    return render_template("track-analysis.html", title=name, id=i, name=name, artists=artists, features=features, features2=features2, key=song_key, time_signature=time_signature, removed=removed, similar_songs=similar_songs)
 
 @app.route("/analysis/album-<i>")
 def album_analysis(i):
