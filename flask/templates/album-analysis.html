@@ -5,6 +5,48 @@
 {% endblock %}
 
 {% block content %}
+    <div class="grid-container-album">
+      <div class="grid-item left-bar">
+        <div class="album-embed">
+          <iframe src="{{ audio_preview_link }}" width="300" height="700" frameborder="0" allowtransparency="true" allow="encrypted-media">
+          </iframe>
+        </div>
+      </div>
+      <div class="grid-item basic-info">
+        <p><strong>Album Name:</strong> {{ title }}</p>
+        <p><strong>Artist(s):</strong> {{ artists }}</p>
+      </div>
+      <div class="grid-item advanced-info">
+        <p><strong>Average Tempo:</strong> {{ averagefeatures["tempo"] }} bpm</p>
+        <p><strong>Average Loudness:</strong> {{ averagefeatures["loudness"] }} dB</p>
+        <p><strong>Average Duration:</strong> {{ averagefeatures["duration_ms"]//60000 }}:{{ (averagefeatures["duration_ms"] % 60000) // 1000 }}
+      </div>
+      <div class="grid-item graph" data-features="{{ averagefeatures2 }}">
+      </div>
+      <div class="grid-item album-list">
+        {% for song_features in features %}
+        <button class="collapsible">{{ song_features["name"]}}</button>
+        <div class="content">
+          <div class="album-list-item">
+            <div class="album-list-item-box">
+              <p><strong>Key: </strong>{{ song_features["Key"] }}</p>
+              <p><strong>Tempo: </strong>{{ song_features["tempo"] }} bpm</p>
+              <p><strong>Beats per Bar: </strong>{{ song_features["TS"] }}</p>
+              <p><strong>Duration: </strong>{{ song_features["duration_ms"]//60000 }}:{{ (song_features["duration_ms"] % 60000) // 1000 }}</p>
+              <p><strong>Loudnesss: </strong>{{  song_features["loudness"] }} dB</p>
+            </div>
+            <div class="album-list-item-box">
+              <div class="graph" data-features = "{{ features2 }}" list> <!--tells the JS that this is one element of a collection-->
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+
+
+    <!--
+
     <h3>Album Name: {{ title }}</h3>
     <h3>Artist(s): {{ artists }}</h3>
 
@@ -19,7 +61,7 @@
         </tr>
         <tr>
             <td rowspan="11"><iframe src="{{ audio_preview_link }}" width="300" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
-            <td><!--blank--></td>
+            <td><!--blank--><!--</td>
             <td rowspan = "11">
               <div class = "graph" data-features = "{{ averagefeatures2 }}">
               </div>
@@ -42,7 +84,7 @@
             <tr>
                 <td>Key: {{ song_features["Key"] }}</td>
                 <td rowspan="10">
-                  <div class="graph" data-features = "{{ features2 }}" list> <!--tells the JS that this is one element of a collection-->
+                  <div class="graph" data-features = "{{ features2 }}" list> <!--tells the JS that this is one element of a collection--><!--
                   </div>
                 </td>
             </tr>
@@ -59,5 +101,6 @@
         </table>
     </div>
     {% endfor %}
+    -->
 
 {% endblock %}
