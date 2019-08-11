@@ -45,6 +45,8 @@ def login_page():
 
 @app.route("/analysis/track-<i>")
 def track_analysis(i):
+    id = i
+    similar_songs = pyscripts.get_similar_songs(i)['tracks']
     features = pyscripts.analysis(i)
     features2 = pyscripts.analysis(i)
     data = pyscripts.get_track(i)
@@ -62,12 +64,13 @@ def track_analysis(i):
     if len(data["artists"]) > 1:
         for i in range (1, len(data["artists"])):
             artists += ", " + data["artists"][i]["name"]
-    return render_template("track-analysis.html", title=name, id=i, name=name, artists=artists, features=features, features2=features2, key=song_key, time_signature=time_signature, removed=removed)
+    return render_template("track-analysis.html", title=name, id=id, name=name, artists=artists, features=features, features2=features2, key=song_key, time_signature=time_signature, removed=removed, similar_songs=similar_songs)
 
 @app.route("/analysis/album-<i>")
 def album_analysis(i):
     #basic information
-    album = pyscripts.get_album(i)
+    id = str(i)
+    album = pyscripts.get_album(id)
     name = album["name"]
     artists = album["artists"][0]["name"] # becomes a comma seperated string of the artists
     audio_preview_link = "https://open.spotify.com/embed/album/" + i
@@ -75,7 +78,7 @@ def album_analysis(i):
         for i in range(1, len(album["artists"])):
             artists += ", " + album["artists"][i]["name"]
     #gather ids for analysis
-    albumtracks = pyscripts.get_album_tracks(i)
+    albumtracks = pyscripts.get_album_tracks(id)
     ids = albumtracks["items"][0]["id"]  # becomes a comma seperated string of song IDs
     if len(albumtracks["items"]) > 1:
         for i in range(1, len(albumtracks["items"])):
@@ -92,6 +95,7 @@ def album_analysis(i):
     for feature in averagefeatures:
         averagefeatures[feature] /= album["total_tracks"]
         averagefeatures[feature] = round(averagefeatures[feature], 3)
+    averagefeatures["duration_ms"] = round(averagefeatures["duration_ms"])
 
     averagefeatures2 = json.dumps(averagefeatures)
     #individual track analyses copied and pasted from track_analysis
@@ -104,4 +108,4 @@ def album_analysis(i):
         track = pyscripts.get_track(feature["id"])
         feature.update(name = track["name"])
     removed = ["track_href", "uri", "type", "analysis_url", "key", "mode", "id", "TS", "time_signature", "Key", "name"]
-    return render_template("album-analysis.html", title=name, artists=artists, id=i, ids=ids, features=features, features2=features2, averagefeatures=averagefeatures, averagefeatures2=averagefeatures2, album=albumtracks, removed=removed, audio_preview_link=audio_preview_link)
+    return render_template("album-analysis.html", title=name, artists=artists, id=id, ids=ids, features=features, features2=features2, averagefeatures=averagefeatures, averagefeatures2=averagefeatures2, album=albumtracks, removed=removed, audio_preview_link=audio_preview_link)
