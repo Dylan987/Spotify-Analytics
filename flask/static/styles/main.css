@@ -170,12 +170,16 @@ h3 {
 }
 
 .collapsible {
-    background-color: gray;
+    background-color: darkSlateGray;
     color: white;
+    font-family: 'Open Sans', sans-serif;
     cursor: pointer;
     padding: 18px;
-    width: 100%;
+    width: 95%;
+    margin-left: 2.5%;
+    margin-right: 2.5%;
     border: none;
+    box-shadow: 3px 3px 5px black;
     text-align: left;
     outline: none;
     font-size: 16px;
@@ -186,10 +190,13 @@ h3 {
 }
 
 .content {
-    padding: 0 18px;
+    padding: 18px;
     display: none;
-    overflow: hidden;
     background-color: black;
+    box-sizing: border-box;
+    width: 95%;
+    margin-left: 2.5%;
+    margin-right: 2.5%;
 }
 
 iframe {
@@ -236,4 +243,29 @@ canvas {
 .similar-song-container:hover {
   background-color: black;
   transition: 200ms;
+}
+
+.grid-container-album {
+  display: grid;
+  grid-gap: 20px;
+  grid-template-rows: auto auto auto;
+  grid-template-columns: 1fr 2fr 2fr;
+  grid-template-areas:
+    "left basic chart"
+    "left advanced chart"
+    ". list list";
+}
+.album-list {
+  grid-area: list;
+}
+.album-list-item {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.album-list-item-block {
+  padding: 10px;
+  margin: 10px;
+  border: 2px solid mediumSeaGreen;
+  border-radius: 10px;
 }
