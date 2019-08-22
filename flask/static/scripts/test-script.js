@@ -1,15 +1,16 @@
 var iframe_rules = {"width":"300", "height":"80", "frameborder":"0", "allowtransparency":"true","allow":"encrypted-media"};
 
-var handle_button = function(event) {
-    console.log("listner triggered");
-    var q = encodeURIComponent(document.getElementById("analysis-song-entry").value);
-    var type = encodeURIComponent(document.getElementById("type-selection").value);
-    console.log(type);
-    console.log(q);
-    url = "/search/" + "q=" + q + "&" + "t=" + type;
+var handle_button = function(event, type) {
+  console.log("listner triggered");
+  var q = encodeURIComponent(document.getElementById("analysis-song-entry").value);
+  var type = encodeURIComponent(document.getElementById("type-selection").value);
+  console.log(type);
+  console.log(q);
+  url = "/search/" + "q=" + q + "&" + "t=" + type;
 
-    var request = new XMLHttpRequest();
+  var request = new XMLHttpRequest();
 
+  if (type=="analysis") {
     request.onload = function() {
       data = JSON.parse(request.responseText);
       console.log(data);
@@ -62,7 +63,7 @@ var handle_button = function(event) {
             //embeded spotify play button (looks nice)
             var preview_audio = document.createElement("iframe");
             for (var key in iframe_rules) {
-                preview_audio.setAttribute(key, iframe_rules[key]);
+              preview_audio.setAttribute(key, iframe_rules[key]);
             }
             preview_audio.setAttribute("src", "https://open.spotify.com/embed/" + type + "/" + items[i]["id"]);
             row.appendChild(preview_audio);
@@ -86,7 +87,7 @@ var handle_button = function(event) {
             //embeded spotify play button (looks nice)
             var preview_audio = document.createElement("iframe");
             for(var key in iframe_rules) {
-                preview_audio.setAttribute(key, iframe_rules[key]);
+              preview_audio.setAttribute(key, iframe_rules[key]);
             }
             preview_audio.setAttribute("height", "380");
             preview_audio.setAttribute("src", "https://open.spotify.com/embed/" + type + "/" + items[i]["id"]);
@@ -117,7 +118,7 @@ var handle_button = function(event) {
             //embeded spotify play button (looks nice)
             var preview_audio = document.createElement("iframe");
             for(var key in iframe_rules) {
-                    preview_audio.setAttribute(key, iframe_rules[key]);
+              preview_audio.setAttribute(key, iframe_rules[key]);
             }
             preview_audio.setAttribute("height", "380")
             preview_audio.setAttribute("src", "https://open.spotify.com/embed/" + type + "/" + items[i]["id"]);
@@ -143,7 +144,7 @@ var handle_button = function(event) {
             //embeded spotify play button (looks nice)
             var preview_audio = document.createElement("iframe");
             for(var key in iframe_rules){
-                preview_audio.setAttribute(key, iframe_rules[key]);
+              preview_audio.setAttribute(key, iframe_rules[key]);
             }
             preview_audio.setAttribute("height", "380")
             preview_audio.setAttribute("src", "https://open.spotify.com/embed/" + type + "/" + items[i]["id"]);
@@ -159,11 +160,15 @@ var handle_button = function(event) {
       //add the finished search to the document
       document.body.appendChild(table_rows);
     };
-    request.onerror = function () {
-      console.log(request.status);
-    };
-    request.open("GET", url, true);
-    request.send();
+  }
+  else if (type=="seeds") {
+    
+  }
+  request.onerror = function () {
+    console.log(request.status);
+  };
+  request.open("GET", url, true);
+  request.send();
 };
 
 $(document).ready(function() { //only runs when the code is ready

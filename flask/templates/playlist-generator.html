@@ -10,6 +10,18 @@
       <h2 class="gen-number">1</h2>
       <p class="gen-text">Select Seeds</p>
       <div class="seed-search">
+        <!--copied from analysis.html-->
+        <div class="formbox">
+          <span>Search for a seed...</span>
+          <select id="type-selection">
+            <option value="track" selected="selected">Songs</option>
+            <option value="artist">Artists</option>
+          </select>
+          <div class="textbox">
+            <input id="analysis-song-entry" type="text" name="query" value="" placeholder="Enter your query">
+          </div>
+          <button id="analysisform" onclick = "handle_button(event, 'seeds')"> Click to Search </button>
+        </div>
       </div>
       <div class="genre-select">
         <input type="text" list="genres" name="genres">
