@@ -61,3 +61,13 @@ def get_similar_songs(_id):
     url = "https://api.spotify.com/v1/recommendations"
     req = requests.get(url, headers=head, params=para).json()
     return req
+
+#will require authorization to work correctly to get proper token
+#userid is the user's ID, obviously
+#name and description are strings, public is a boolean
+def create_and_return_playlist(_userID, _name, _description, _public):
+    head = {"Authorization": "Bearer " + get_token()}
+    para = {"name": _name, "description": _description, "public": _public}
+    url = "https://api.spotify.com/users/" + _userID + "/playlists"
+    playlist = requests.post(url, headers=head, json=para).json()
+    return playlist
