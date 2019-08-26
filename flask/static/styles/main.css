@@ -286,3 +286,9 @@ canvas {
     padding: 5px;
     color: white;
 }
+.seed-item {
+  color: white;
+}
+.seed-item:hover{
+  text-decoration: line-through;
+}
