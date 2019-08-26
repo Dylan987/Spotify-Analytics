@@ -5,174 +5,180 @@
 {% endblock %}
 
 {% block content %}
-  <div class="main container centered-container">
-    <div class="gen-seeds gen-block">
-      <div>
-          <h2 class="gen-number">1</h2>
-          <h2 class="gen-text">Select Seeds</h2>
-      <div>
-      <div class="seed-search">
-        <!--copied from analysis.html-->
-        <div class="formbox">
-          <span>Search for a seed...</span>
-          <select id="type-selection">
-            <option value="track" selected="selected">Songs</option>
-            <option value="artist">Artists</option>
-          </select>
-          <div class="textbox">
-            <input id="analysis-song-entry" type="text" name="query" value="" placeholder="Enter your query">
+<div class="main container centered-container">
+  <div class="gen-seeds gen-block">
+    <div>
+      <h2 class="gen-number">1</h2>
+      <h2 class="gen-text">Select Seeds</h2>
+    </div>
+    <div class="seed-search">
+      <!--copied from analysis.html-->
+      <div class="formbox">
+        <span>Search for a seed...</span>
+        <select id="type-selection">
+          <option value="track" selected="selected">Songs</option>
+          <option value="artist">Artists</option>
+        </select>
+        <div class="textbox">
+          <input id="analysis-song-entry" type="text" name="query" value="" placeholder="Enter your query">
+        </div>
+        <button id="analysisform" onclick = "handle_button(event, 'seeds')"> Click to Search </button>
+      </div>
+    </div>
+    <div class="genre-select">
+      <div class="textbox">
+        <input type="text" list="genres" name="genres" placeholder="Enter a genre">
+        <datalist id="genres">
+          {% for genre in [
+            "acoustic",
+            "afrobeat",
+            "alt-rock",
+            "alternative",
+            "ambient",
+            "anime",
+            "black-metal",
+            "bluegrass",
+            "blues",
+            "bossanova",
+            "brazil",
+            "breakbeat",
+            "british",
+            "cantopop",
+            "chicago-house",
+            "children",
+            "chill",
+            "classical",
+            "club",
+            "comedy",
+            "country",
+            "dance",
+            "dancehall",
+            "death-metal",
+            "deep-house",
+            "detroit-techno",
+            "disco",
+            "disney",
+            "drum-and-bass",
+            "dub",
+            "dubstep",
+            "edm",
+            "electro",
+            "electronic",
+            "emo",
+            "folk",
+            "forro",
+            "french",
+            "funk",
+            "garage",
+            "german",
+            "gospel",
+            "goth",
+            "grindcore",
+            "groove",
+            "grunge",
+            "guitar",
+            "happy",
+            "hard-rock",
+            "hardcore",
+            "hardstyle",
+            "heavy-metal",
+            "hip-hop",
+            "holidays",
+            "honky-tonk",
+            "house",
+            "idm",
+            "indian",
+            "indie",
+            "indie-pop",
+            "industrial",
+            "iranian",
+            "j-dance",
+            "j-idol",
+            "j-pop",
+            "j-rock",
+            "jazz",
+            "k-pop",
+            "kids",
+            "latin",
+            "latino",
+            "malay",
+            "mandopop",
+            "metal",
+            "metal-misc",
+            "metalcore",
+            "minimal-techno",
+            "movies",
+            "mpb",
+            "new-age",
+            "new-release",
+            "opera",
+            "pagode",
+            "party",
+            "philippines-opm",
+            "piano",
+            "pop",
+            "pop-film",
+            "post-dubstep",
+            "power-pop",
+            "progressive-house",
+            "psych-rock",
+            "punk",
+            "punk-rock",
+            "r-n-b",
+            "rainy-day",
+            "reggae",
+            "reggaeton",
+            "road-trip",
+            "rock",
+            "rock-n-roll",
+            "rockabilly",
+            "romance",
+            "sad",
+            "salsa",
+            "samba",
+            "sertanejo",
+            "show-tunes",
+            "singer-songwriter",
+            "ska",
+            "sleep",
+            "songwriter",
+            "soul",
+            "soundtracks",
+            "spanish",
+            "study",
+            "summer",
+            "swedish",
+            "synth-pop",
+            "tango",
+            "techno",
+            "trance",
+            "trip-hop",
+            "turkish",
+            "work-out",
+            "world-music"
+            ] %}
+            <option value="{{ genre }}">
+              {% endfor %}
+            </datalist>
           </div>
-          <button id="analysisform" onclick = "handle_button(event, 'seeds')"> Click to Search </button>
+          <button type="button" name="Add as a seed" class="genre_button">Add as a seed</button>
+        </div>
+        <div class="seed-confirm">
+          <ul class="seed-confirm-list">
+          </ul>
         </div>
       </div>
-      <div class="genre-select">
-        <input type="text" list="genres" name="genres" placeholder="Enter a Genre">
-          <datalist id="genres">
-            {% for genre in [
-              "acoustic",
-              "afrobeat",
-              "alt-rock",
-              "alternative",
-              "ambient",
-              "anime",
-              "black-metal",
-              "bluegrass",
-              "blues",
-              "bossanova",
-              "brazil",
-              "breakbeat",
-              "british",
-              "cantopop",
-              "chicago-house",
-              "children",
-              "chill",
-              "classical",
-              "club",
-              "comedy",
-              "country",
-              "dance",
-              "dancehall",
-              "death-metal",
-              "deep-house",
-              "detroit-techno",
-              "disco",
-              "disney",
-              "drum-and-bass",
-              "dub",
-              "dubstep",
-              "edm",
-              "electro",
-              "electronic",
-              "emo",
-              "folk",
-              "forro",
-              "french",
-              "funk",
-              "garage",
-              "german",
-              "gospel",
-              "goth",
-              "grindcore",
-              "groove",
-              "grunge",
-              "guitar",
-              "happy",
-              "hard-rock",
-              "hardcore",
-              "hardstyle",
-              "heavy-metal",
-              "hip-hop",
-              "holidays",
-              "honky-tonk",
-              "house",
-              "idm",
-              "indian",
-              "indie",
-              "indie-pop",
-              "industrial",
-              "iranian",
-              "j-dance",
-              "j-idol",
-              "j-pop",
-              "j-rock",
-              "jazz",
-              "k-pop",
-              "kids",
-              "latin",
-              "latino",
-              "malay",
-              "mandopop",
-              "metal",
-              "metal-misc",
-              "metalcore",
-              "minimal-techno",
-              "movies",
-              "mpb",
-              "new-age",
-              "new-release",
-              "opera",
-              "pagode",
-              "party",
-              "philippines-opm",
-              "piano",
-              "pop",
-              "pop-film",
-              "post-dubstep",
-              "power-pop",
-              "progressive-house",
-              "psych-rock",
-              "punk",
-              "punk-rock",
-              "r-n-b",
-              "rainy-day",
-              "reggae",
-              "reggaeton",
-              "road-trip",
-              "rock",
-              "rock-n-roll",
-              "rockabilly",
-              "romance",
-              "sad",
-              "salsa",
-              "samba",
-              "sertanejo",
-              "show-tunes",
-              "singer-songwriter",
-              "ska",
-              "sleep",
-              "songwriter",
-              "soul",
-              "soundtracks",
-              "spanish",
-              "study",
-              "summer",
-              "swedish",
-              "synth-pop",
-              "tango",
-              "techno",
-              "trance",
-              "trip-hop",
-              "turkish",
-              "work-out",
-              "world-music"
-          ] %}
-          <option value="{{ genre }}">
-          {% endfor %}
-          </datalist>
-          <button type="button" name="Add as a seed">Add as a seed</button>
+      <div class="gen-tune gen-block">
+        <div>
+          <h2 class="gen-number">2</h2>
+          <h2 class="gen-text">Tune your preferences</h2>
+        </div>
+      </div>
+      <div class="gen-info gen-block">
+        <div>
+          <h2 class="gen-number">3</h2>
+          <h2 class="gen-text">Set your playlist's information</h2>
+        </div>
       </div>
     </div>
-    <div class="gen-tune gen-block">
-        <div>
-            <h2 class="gen-number">2</h2>
-            <h2 class="gen-text">Tune your preferences</h2>
-        <div>
-    </div>
-    <div class="gen-info gen-block">
-        <div>
-            <h2 class="gen-number">3</h2>
-            <h2 class="gen-text">Set your playlist's information</h2>
-        <div>
-    </div>
-  </div>
 {% endblock %}

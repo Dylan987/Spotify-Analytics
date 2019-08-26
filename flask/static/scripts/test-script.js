@@ -169,7 +169,7 @@ var handle_button = function(event, source) {
       //delete previous searches
       if (document.querySelector(".results_container") !== null) {
         console.log("deleting");
-        document.body.removeChild(document.querySelector(".results_container"));
+        document.querySelector(".formbox").removeChild(document.querySelector(".results_container"));
       }
 
       //add the new search
@@ -188,12 +188,23 @@ var handle_button = function(event, source) {
       else {
         if (type == "track") {
           //tracks
-          var items = data["tracks"]["items"]; //array of "track objects"
+          let items = data["tracks"]["items"]; //array of "track objects"
           for (var i = 0; i < number_of_displayed; i++) {
             //create an event handler for the table row
-            var link = document.createElement("div");
-            link.addEventListener("click", function(){
+            let link = document.createElement("div");
+            link.addEventListener("click", function() {
                 console.log("add this song to the list.  ID: " + items[i]['id']);
+                var list = document.getElementsByClassName("seed-confirm-list")[0];
+                list_item = document.createElement("li");
+                list_item.innerText = type + ": " + items[i]["id"];
+                list_item.classList.add("seed-item");
+                list.appendChild(list_item);
+
+                //also: remove searches
+                if (document.querySelector(".results_container") !== null) {
+                  console.log("deleting");
+                  document.querySelector(".formbox").removeChild(document.querySelector(".results_container"));
+                }
             });
 
             //create a "row" - a display for a single item
@@ -226,12 +237,24 @@ var handle_button = function(event, source) {
           }
         }
         else if (type == "artist") {
-          var items = data["artists"]["items"]; //array of "artist" objects
+          let items = data["artists"]["items"]; //array of "artist" objects
           for (var i = 0; i < number_of_displayed; i++) {
             //create an event handler for the row
-            var link = document.createElement("div");
-            link.addEventListener("click", function(){
-                console.log("add this artist to the list.  ID: " + items[i]['id']);
+            let link = document.createElement("div");
+            link.addEventListener("click", function() {
+              console.log("add this artist to the list.  ID: " + items[i]['id']);
+              let list = document.getElementsByClassName("seed-confirm-list")[0];
+              list_item = document.createElement("li");
+              list_item.classList.add("seed-item");
+              list_item.innerText = type + ": " + items[i]["id"];
+              list.appendChild(list_item);
+
+
+              //also: remove searches
+              if (document.querySelector(".results_container") !== null) {
+                console.log("deleting");
+                document.querySelector(".formbox").removeChild(document.querySelector(".results_container"));
+              }
             });
             //create a "row" - a display for a single item
             var row = document.createElement("div");
@@ -249,8 +272,9 @@ var handle_button = function(event, source) {
             preview_audio.setAttribute("height", "380");
             preview_audio.setAttribute("src", "https://open.spotify.com/embed/" + type + "/" + items[i]["id"]);
             row.appendChild(preview_audio);
+            link.appendChild(row);
 
-            table_rows.appendChild(row);
+            table_rows.appendChild(link);
           }
         }
       }
@@ -440,4 +464,15 @@ $(document).ready(function() { //only runs when the code is ready
         }
       }
     }
+  if (document.getElementsByClassName("genre_button")){
+     document.getElementsByClassName("genre_button")[0].addEventListener("click", function(e) {
+       let selected_genre = this.parentNode.getElementsByTagName("input")[0].value;
+       console.log(selected_genre + " is being added to the seed list");
+       var list = document.getElementsByClassName("seed-confirm-list")[0];
+       var list_item = document.createElement("li");
+       list_item.classList.add("seed-item");
+       list_item.innerText = "genre" + ": " + selected_genre
+       list.appendChild(list_item);
+     });
+  }
 });
