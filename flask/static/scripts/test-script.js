@@ -10,10 +10,10 @@ var handle_button = function(event, source) {
 
   if (source=="analysis") {
     request.onload = function() {
-      data = JSON.parse(request.responseText);
+      var data = JSON.parse(request.responseText);
       console.log(data);
 
-      number_of_displayed = Math.min(5, data[type + "s"]["items"].length);  // caps at 5 at
+      var number_of_displayed = Math.min(5, data[type + "s"]["items"].length);  // caps at 5 at
 
       //delete any previous searches
       if (document.querySelector(".results_container") !== null) {
@@ -162,9 +162,9 @@ var handle_button = function(event, source) {
   else if (source=="seeds") {
     request.onload = function() {
       //get the data
-      data = JSON.parse(request.responseText);
+      var data = JSON.parse(request.responseText);
       console.log(data);
-      number_of_displayed = Math.min(5, data[type + "s"]["items"].length);  // caps at 5 at
+      var number_of_displayed = Math.min(5, data[type + "s"]["items"].length);  // caps at 5 at
 
       //delete previous searches
       if (document.querySelector(".results_container") !== null) {
@@ -189,15 +189,24 @@ var handle_button = function(event, source) {
         if (type == "track") {
           //tracks
           let items = data["tracks"]["items"]; //array of "track objects"
-          for (var i = 0; i < number_of_displayed; i++) {
+          for (let i = 0; i < number_of_displayed; i++) {
             //create an event handler for the table row
             let link = document.createElement("div");
             link.addEventListener("click", function() {
                 console.log("add this song to the list.  ID: " + items[i]['id']);
                 var list = document.getElementsByClassName("seed-confirm-list")[0];
                 list_item = document.createElement("li");
-                list_item.innerText = type + ": " + items[i]["id"];
+                list_item.innerText = items[i]["name"] + " - " + type + ":" + items[i]["id"];
                 list_item.classList.add("seed-item");
+                list_item.dataset.id = items[i]["id"]; //needed for sessionStorage
+                list_item.addEventListener("click", function(e) {
+                  this.parentNode.removeChild(this);
+                  //remove from sessionStorage
+                  let tracks = JSON.parse(sessionStorage.getItem("seed_tracks"));
+                  let index = tracks.indexOf(this.dataset.id);
+                  tracks.splice(index, 1);
+                  sessionStorage.setItem("seed_tracks", JSON.stringify(tracks));
+                });
                 list.appendChild(list_item);
 
                 //also: remove searches
@@ -205,27 +214,38 @@ var handle_button = function(event, source) {
                   console.log("deleting");
                   document.querySelector(".formbox").removeChild(document.querySelector(".results_container"));
                 }
+
+                //also: add to session storage
+                if (sessionStorage.getItem("seed_tracks")) {
+                  let tracks = JSON.parse(sessionStorage.getItem("seed_tracks")); // return an array of IDs
+                  tracks.push(items[i]["id"]);
+                  sessionStorage.setItem("seed_tracks", JSON.stringify(tracks));
+                } else {
+                  let tracks = [];
+                  tracks.push(items[i]["id"]);
+                  sessionStorage.setItem("seed_tracks", JSON.stringify(tracks));
+                }
             });
 
             //create a "row" - a display for a single item
-            var row = document.createElement("div");
+            let row = document.createElement("div");
             row.setAttribute("class", "result_row");
 
-            var track_name = document.createElement("p");
+            let track_name = document.createElement("p");
             track_name.appendChild(document.createTextNode("Name: " + items[i]["name"]));
             row.appendChild(track_name);
 
-            var artist_name = document.createElement("p");
+            let artist_name = document.createElement("p");
             artist_name.appendChild(document.createTextNode("Artist: " + items[i]["artists"][0]["name"]));
             row.appendChild(artist_name);
 
-            var album_name = document.createElement("p");
+            let album_name = document.createElement("p");
             album_name.appendChild(document.createTextNode("Album: " + items[i]["album"]["name"]));
             row.appendChild(album_name);
 
             //embeded spotify play button (looks nice)
-            var preview_audio = document.createElement("iframe");
-            for (var key in iframe_rules) {
+            let preview_audio = document.createElement("iframe");
+            for (let key in iframe_rules) {
               preview_audio.setAttribute(key, iframe_rules[key]);
             }
             preview_audio.setAttribute("src", "https://open.spotify.com/embed/" + type + "/" + items[i]["id"]);
@@ -238,7 +258,7 @@ var handle_button = function(event, source) {
         }
         else if (type == "artist") {
           let items = data["artists"]["items"]; //array of "artist" objects
-          for (var i = 0; i < number_of_displayed; i++) {
+          for (let i = 0; i < number_of_displayed; i++) {
             //create an event handler for the row
             let link = document.createElement("div");
             link.addEventListener("click", function() {
@@ -246,7 +266,16 @@ var handle_button = function(event, source) {
               let list = document.getElementsByClassName("seed-confirm-list")[0];
               list_item = document.createElement("li");
               list_item.classList.add("seed-item");
-              list_item.innerText = type + ": " + items[i]["id"];
+              list_item.dataset.id = items[i]["id"];
+              list_item.innerText = items[i]["name"] + " - " + type + ": " + items[i]["id"];
+              list_item.addEventListener("click", function(e) {
+                //remove from sessionStorage
+                let artists = JSON.parse(sessionStorage.getItem("seed_artists"));
+                let index = artists.indexOf(this.dataset.id);
+                artists.splice(index, 1);
+                sessionStorage.setItem("seed_artists", JSON.stringify(artists));
+                this.parentNode.removeChild(this);
+              });
               list.appendChild(list_item);
 
 
@@ -255,22 +284,32 @@ var handle_button = function(event, source) {
                 console.log("deleting");
                 document.querySelector(".formbox").removeChild(document.querySelector(".results_container"));
               }
+              //also: add to session storage
+              if (sessionStorage.getItem("seed_artists")) {
+                let artists = JSON.parse(sessionStorage.getItem("seed_artists")); // return an array of IDs
+                artists.push(items[i]["id"]);
+                sessionStorage.setItem("seed_artists", JSON.stringify(artists));
+              } else {
+                let artists = [];
+                artists.push(items[i]["id"]);
+                sessionStorage.setItem("seed_artists", JSON.stringify(artists));
+              }
             });
             //create a "row" - a display for a single item
-            var row = document.createElement("div");
+            let row = document.createElement("div");
             row.setAttribute("class", "result_row");
 
-            var artist_name = document.createElement("p");
+            let artist_name = document.createElement("p");
             artist_name.appendChild(document.createTextNode("Name: " + items[i]["name"]));
             row.appendChild(artist_name);
 
             //embeded spotify play button (looks nice)
-            var preview_audio = document.createElement("iframe");
-            for(var key in iframe_rules) {
+            let preview_audio = document.createElement("iframe");
+            for(let key in iframe_rules) {
               preview_audio.setAttribute(key, iframe_rules[key]);
             }
             preview_audio.setAttribute("height", "380");
-            preview_audio.setAttribute("src", "https://open.spotify.com/embed/" + type + "/" + items[i]["id"]);
+            preview_audio.setAttribute("src", "https://open.spotify.com/embed/" + type + "/" + items[i]["id"] + ":" + items[i]["name"]);
             row.appendChild(preview_audio);
             link.appendChild(row);
 
@@ -291,7 +330,7 @@ var handle_button = function(event, source) {
 $(document).ready(function() { //only runs when the code is ready
 
   //collapsibles code
-  if (document.getElementsByClassName("collapsible")){
+  if (document.getElementsByClassName("collapsible").length){
       var c = document.getElementsByClassName("collapsible");
       for (var i = 0; i < c.length; i++){
           c[i].addEventListener("click", function() {
@@ -305,7 +344,7 @@ $(document).ready(function() { //only runs when the code is ready
           });
       }
   }
-  if (document.getElementsByClassName("graph")) { //only runs if there is a "graph" ID on the page
+  if (document.getElementsByClassName("graph").length) { //only runs if there is a "graph" ID on the page
       let graphs = document.getElementsByClassName("graph");
       //graph object definitions
       //create the bar object:
@@ -464,15 +503,39 @@ $(document).ready(function() { //only runs when the code is ready
         }
       }
     }
-  if (document.getElementsByClassName("genre_button")){
+  if (document.getElementsByClassName("genre_button").length) {
      document.getElementsByClassName("genre_button")[0].addEventListener("click", function(e) {
        let selected_genre = this.parentNode.getElementsByTagName("input")[0].value;
+       //reset the field
+       this.parentNode.getElementsByTagName("input")[0].value = "";
        console.log(selected_genre + " is being added to the seed list");
        var list = document.getElementsByClassName("seed-confirm-list")[0];
        var list_item = document.createElement("li");
        list_item.classList.add("seed-item");
+       list_item.dataset.genre = selected_genre;
        list_item.innerText = "genre" + ": " + selected_genre
+       list_item.addEventListener("click", function(e) {
+         //remove from sessionStorage
+         let genres = JSON.parse(sessionStorage.getItem("seed_genres"));
+         let index = genres.indexOf(this.dataset.genre);
+         genres.splice(index, 1);
+         sessionStorage.setItem("seed_genres", JSON.stringify(genres));
+         this.parentNode.removeChild(this);
+       });
        list.appendChild(list_item);
+       //also: add to session storage
+       if (sessionStorage.getItem("seed_genres")) {
+         let genres = JSON.parse(sessionStorage.getItem("seed_genres")); // return an array of IDs
+         genres.push(selected_genre);
+         sessionStorage.setItem("seed_genres", JSON.stringify(genres));
+       } else {
+         let genres = [];
+         genres.push(selected_genre);
+         sessionStorage.setItem("seed_genres", JSON.stringify(genres));
+       }
      });
+  }
+  if (window.location.pathname == "/playlist-generator.html") {
+    sessionStorage.clear();
   }
 });
