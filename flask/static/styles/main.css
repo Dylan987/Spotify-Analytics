@@ -1,3 +1,6 @@
+input {
+  font-family: 'Open Sans', sans-serif;
+}
 p {
   color: white;
 }
@@ -291,4 +294,10 @@ canvas {
 }
 .seed-item:hover{
   text-decoration: line-through;
+}
+
+/* range slider css */
+.range-slider-container {
+  width: 100%;
+  color: mediumSeaGreen;
 }

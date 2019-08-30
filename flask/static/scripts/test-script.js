@@ -537,5 +537,18 @@ $(document).ready(function() { //only runs when the code is ready
   }
   if (window.location.pathname == "/playlist-generator.html") {
     sessionStorage.clear();
+
+    //implementing range sliders
+    $(".range-slider-container").slider({
+      range: true,
+      min: 0.0,
+      max: 1.0,
+      step: 0.01,
+      values: [0.25, 0.75],
+      slide: function(e, ui) {
+        let tuneable = this.id.slice(7);
+        $("#" + "slider-label-" + tuneable).val(ui.values[0] + " - " + ui.values[1]);
+      }
+    });
   }
 });
