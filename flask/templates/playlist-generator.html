@@ -1,5 +1,10 @@
 {% extends "base.html" %}
 
+{% block extraHead %}
+<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+{% endblock %}
+
 {% block header %}
     <h1>{% block title %}Playlist Generator{% endblock %}</h1>
 {% endblock %}
@@ -173,6 +178,15 @@
           <h2 class="gen-number">2</h2>
           <h2 class="gen-text">Tune your preferences</h2>
         </div>
+        {% for tuneable in ["acousticness", "danceability", "energy", "instrumentalness", "valence"] %}
+        <p>
+          <label for="slider-label-{{ tuneable }}">{{ tuneable }}</label>
+          <input type="text" id="slider-label-{{ tuneable }}" readonly style="border:0; color:mediumSeaGreen; font-weight:bold;" value="0.25 - 0.75">
+        </p>
+        <div class="range-slider-container" id="slider-{{ tuneable }}" >
+        </div>
+        {% endfor %}
+
       </div>
       <div class="gen-info gen-block">
         <div>
