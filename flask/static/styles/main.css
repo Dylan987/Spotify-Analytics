@@ -340,12 +340,10 @@ label.slider-label {
   background: mediumSeaGreen;
   border: none;
 }
-
-.radio-btn {
-
+.prompt {
+  margin: 20px 0px 0px 0px;
 }
-
-.radio-btn-text {
-  color: white;
-  font-family: 'Open Sans', sans-serif;
+.textbox.textbox-playlist {
+  margin: 0px 0px 30px 0px;
+  padding: 8px 0px 8px 0px;
 }
