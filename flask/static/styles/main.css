@@ -323,3 +323,17 @@ input.slider-label {
 label.slider-label {
   color: white;
 }
+
+.custom-slider {
+  background: darkSlateGray;
+}
+
+.custom-green-range {
+  background: mediumSeaGreen;
+  top: -10px;
+}
+
+.custom-green-handles {
+  background: mediumSeaGreen;
+  border: none;
+}
