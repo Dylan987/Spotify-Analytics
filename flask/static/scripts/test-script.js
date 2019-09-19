@@ -550,5 +550,30 @@ $(document).ready(function() { //only runs when the code is ready
         $("#" + "slider-label-" + tuneable).val(ui.values[0] + " - " + ui.values[1]);
       }
     });
+
+    //adding event listener for the btn
+    $("#playlist-gen-btn").click(function(){
+      //get the range slider values into sessionStorage
+      let tuneable_char = ["acousticness", "danceability", "energy", "instrumentalness", "valence"];
+      let tuneables = {};
+      $(".slider-box").each(function(index){
+        tuneables[tuneable_char[index]] = this.firstElementChild.lastElementChild.value.split("-");
+      });
+      console.log(tuneables);
+      sessionStorage.setItem("tuneables", JSON.stringify(tuneables));
+      //get the playlist info sessionStorage
+      let playlist_chars = ["title", "description", "privacy"];
+      let playlist_info = {};
+      $(".textbox-playlist").each(function(index){
+        if(this.firstElementChild.value){
+          playlist_info[playlist_chars[index]] = this.firstElementChild.value;
+        }
+        else {
+          playlist_info[playlist_chars[index]] = "test";
+        }
+      });
+      console.log(playlist_info);
+      sessionStorage.setItem("playlist_info", JSON.stringify(playlist_info));
+    });
   }
 });
