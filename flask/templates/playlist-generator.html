@@ -181,7 +181,7 @@
         {% for tuneable in ["acousticness", "danceability", "energy", "instrumentalness", "valence"] %}
         <div class="slider-box">
           <div>
-            <label class="slider-label" for="slider-label-{{ tuneable }}">{{ tuneable }}</label>
+            <label class="slider-label" for="slider-label-{{ tuneable }}">{{ tuneable.capitalize() }}:</label>
             <input class="slider-label" type="text" id="slider-label-{{ tuneable }}" readonly value="0.25 - 0.75">
           </div>
           <div class="range-slider-container" id="slider-{{ tuneable }}" >
