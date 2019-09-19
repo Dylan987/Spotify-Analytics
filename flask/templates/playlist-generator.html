@@ -179,12 +179,15 @@
           <h2 class="gen-text">Tune your preferences</h2>
         </div>
         {% for tuneable in ["acousticness", "danceability", "energy", "instrumentalness", "valence"] %}
-        <p>
-          <label for="slider-label-{{ tuneable }}">{{ tuneable }}</label>
-          <input type="text" id="slider-label-{{ tuneable }}" readonly style="border:0; color:mediumSeaGreen; font-weight:bold;" value="0.25 - 0.75">
-        </p>
-        <div class="range-slider-container" id="slider-{{ tuneable }}" >
+        <div class="slider-box">
+          <div>
+            <label class="slider-label" for="slider-label-{{ tuneable }}">{{ tuneable }}</label>
+            <input class="slider-label" type="text" id="slider-label-{{ tuneable }}" readonly value="0.25 - 0.75">
+          </div>
+          <div class="range-slider-container" id="slider-{{ tuneable }}" >
+          </div>
         </div>
+
         {% endfor %}
 
       </div>

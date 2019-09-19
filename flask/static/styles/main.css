@@ -297,7 +297,29 @@ canvas {
 }
 
 /* range slider css */
+.slider-box {
+  margin: 20px;
+}
+.slider-box div {
+  margin: 10px;
+}
 .range-slider-container {
   width: 100%;
   color: mediumSeaGreen;
+}
+.slider-label {
+  font-size: 14px;
+  font-family: "Open Sans", sans-serif;
+  display: inline;
+  border: none;
+}
+input.slider-label {
+  border-bottom: 1px solid mediumSeaGreen;
+  width: 200px;
+  background: none;
+  outline: none;
+  color: mediumSeaGreen;
+}
+label.slider-label {
+  color: white;
 }
