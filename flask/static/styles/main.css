@@ -78,6 +78,9 @@ h1 {
     padding: 8px 0;
     border-bottom: 1px solid mediumSeaGreen;
 }
+.textbox.textarea {
+  overflow: auto;
+}
 .textbox input{
     border: none;
     width: 100%;
@@ -298,10 +301,10 @@ canvas {
 
 /* range slider css */
 .slider-box {
-  margin: 20px;
+  margin: 20px 0px;
 }
 .slider-box div {
-  margin: 10px;
+  margin: 10px 0px;
 }
 .range-slider-container {
   width: 100%;
@@ -336,4 +339,13 @@ label.slider-label {
 .custom-green-handles {
   background: mediumSeaGreen;
   border: none;
+}
+
+.radio-btn {
+
+}
+
+.radio-btn-text {
+  color: white;
+  font-family: 'Open Sans', sans-serif;
 }

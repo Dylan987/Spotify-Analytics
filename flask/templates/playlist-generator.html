@@ -195,6 +195,25 @@
         <div>
           <h2 class="gen-number">3</h2>
           <h2 class="gen-text">Set your playlist's information</h2>
+          <div class="playlist-info">
+              <p class="prompt-title">Enter the title of your playlist</p>
+              <div class="textbox">
+                <input type="text" placeholder="Best Playlist Ever"></input>
+              </div>
+              <p class="prompt-privacy">Private or Public Playlist?</p>
+              <div class="textbox">
+                <input type="text" list="privacys" name="privacys" placeholder="Private or Public?">
+                <datalist id="privacys">
+                  <option value="private">
+                  <option value="public">
+                </datalist>
+              </div>
+              <p class="prompt-description">Enter the description of your playlist</p>
+              <div class="textbox textarea">
+                <input type="textarea" placeholder="Seriously, its good"></input>
+              </div>
+
+          </div>
         </div>
       </div>
     </div>
