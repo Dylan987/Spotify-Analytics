@@ -105,3 +105,4 @@ venv.bak/
 *.pyc
 *.xml
 *.iml
+*.pyc

@@ -264,7 +264,7 @@ var handle_button = function(event, source) {
             link.addEventListener("click", function() {
               console.log("add this artist to the list.  ID: " + items[i]['id']);
               let list = document.getElementsByClassName("seed-confirm-list")[0];
-              list_item = document.createElement("li");
+              let list_item = document.createElement("li");
               list_item.classList.add("seed-item");
               list_item.dataset.id = items[i]["id"];
               list_item.innerText = items[i]["name"] + " - " + type + ": " + items[i]["id"];
@@ -332,7 +332,7 @@ $(document).ready(function() { //only runs when the code is ready
   //collapsibles code
   if (document.getElementsByClassName("collapsible").length){
       var c = document.getElementsByClassName("collapsible");
-      for (var i = 0; i < c.length; i++){
+      for (let i = 0; i < c.length; i++){
           c[i].addEventListener("click", function() {
               this.classList.toggle("active");
               var content = this.nextElementSibling;
@@ -569,6 +569,12 @@ $(document).ready(function() { //only runs when the code is ready
       });
       console.log(playlist_info);
       sessionStorage.setItem("playlist_info", JSON.stringify(playlist_info));
+
+      //now, send the user to the spotify authentication
+      let client_id = "a144ffdca3a04024b85da45b0865dc17";
+      let url = "https://accounts.spotify.com/authorize" + "?client_id="+client_id+"&response_type=token&redirect_uri=http://127.0.0.1:5000/playlist-generated.html";
+      console.log("you clicked me");
+      window.location.href = url;
     });
   }
 });
