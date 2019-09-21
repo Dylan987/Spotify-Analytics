@@ -4,7 +4,7 @@ var handle_button = function(event, source) {
   console.log("listner triggered");
   var q = encodeURIComponent(document.getElementById("analysis-song-entry").value);
   var type = encodeURIComponent(document.getElementById("type-selection").value);
-  url = "/search/" + "q=" + q + "&" + "t=" + type;
+  var url = "/search/" + "q=" + q + "&" + "t=" + type;
 
   var request = new XMLHttpRequest();
 
@@ -403,7 +403,7 @@ $(document).ready(function() { //only runs when the code is ready
           //clear the Canvas
           ctx.clearRect(0, 0, 480, 320);
           //the bars
-          for (var i = 0; i < this.bars.length; i++) {
+          for (let i = 0; i < this.bars.length; i++) {
             this.bars[i].draw(ctx);
           }
           //the axis
@@ -427,7 +427,7 @@ $(document).ready(function() { //only runs when the code is ready
           ctx.stroke();
           //ticks
           ctx.beginPath();
-          for (var i = 0; i < 10; i++) {
+          for (let i = 0; i < 10; i++) {
             ctx.moveTo(40 + (i + 1) * 40, 260);
             ctx.lineTo(40 + (i + 1) * 40, 270);
             ctx.font = "12pt 'Open Sans', sans-serif";
@@ -444,12 +444,7 @@ $(document).ready(function() { //only runs when the code is ready
         };
         this.mousemove = function(mx, my) {
           for (var i = 0; i < this.bars.length; i++) {
-            if (this.bars[i].isInside(mx, my)){
-              this.bars[i].hovered = true;
-            }
-            else {
-              this.bars[i].hovered = false;
-            }
+            this.bars[i].hovered = this.bars[i].isInside(mx, my);
           }
           this.draw();
         };
