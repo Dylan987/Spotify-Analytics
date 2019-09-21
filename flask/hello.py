@@ -35,6 +35,10 @@ def about_page():
 def contact_page():
     return render_template("contact.html")
 
+@app.route("/playlist-generated.html")
+def playlist_generated():
+    return render_template("playlist-generated.html")
+
 @app.route("/playlist-generator.html")
 def generator_page():
     return render_template("playlist-generator.html")
