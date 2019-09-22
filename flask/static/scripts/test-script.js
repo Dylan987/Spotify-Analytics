@@ -558,28 +558,37 @@ $(document).ready(function() { //only runs when the code is ready
       sessionStorage.setItem("tuneables", JSON.stringify(tuneables));
       //get the playlist info sessionStorage
       let playlist_chars = ["title", "description", "privacy"];
-      let playlist_info = {};
+
+      //defaults
+      let d = new Date()
+      let statetime = d.getTime(); //used for a default playlist name and as a state value
+      sessionStorage.setItem("statetime", encodeURIComponent(statetime));
+      let playlist_info = {
+        "title": "Playlist created at " + statetime,
+        "privacy": "private",
+        "description": ""
+      };
+
       $(".textbox-playlist").each(function(index){
         if(this.firstElementChild.value){
           playlist_info[playlist_chars[index]] = this.firstElementChild.value;
-        }
-        else {
-          playlist_info[playlist_chars[index]] = "test";
         }
       });
       console.log(playlist_info);
       sessionStorage.setItem("playlist_info", JSON.stringify(playlist_info));
       let scopes;
-      if (playlist_info["privacy"] == "private") {
+      if (playlist_info["privacy"] === "public") {
         scopes = "playlist-modify-private";
       }
-      else if (playlist_info["privacy"] == "public") {
+      else {
         scopes = "playlist-modify-private"
       }
 
       //now, send the user to the spotify authentication
       let client_id = "a144ffdca3a04024b85da45b0865dc17";
-      let url = "https://accounts.spotify.com/authorize" + "?client_id="+client_id+"&response_type=token&redirect_uri=http://127.0.0.1:5000/playlist-generated.html";
+      let url = "https://accounts.spotify.com/authorize" +
+        "?client_id="+client_id+"&response_type=token&redirect_uri=http://127.0.0.1:5000/playlist-generated.html" +
+        "&scopes=" + encodeURIComponent(scopes) + "&state=" + encodeURIComponent(statetime);
       console.log("you clicked me");
       window.location.href = url;
     });
