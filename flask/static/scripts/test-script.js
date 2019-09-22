@@ -542,7 +542,7 @@ $(document).ready(function() { //only runs when the code is ready
       values: [0.25, 0.75],
       slide: function(e, ui) {
         let tuneable = this.id.slice(7);
-        $("#" + "slider-label-" + tuneable).val(ui.values[0] + " - " + ui.values[1]);
+        $("#slider-label-" + tuneable).val(ui.values[0] + " - " + ui.values[1]);
       }
     });
 
@@ -569,6 +569,13 @@ $(document).ready(function() { //only runs when the code is ready
       });
       console.log(playlist_info);
       sessionStorage.setItem("playlist_info", JSON.stringify(playlist_info));
+      let scopes;
+      if (playlist_info["privacy"] == "private") {
+        scopes = "playlist-modify-private";
+      }
+      else if (playlist_info["privacy"] == "public") {
+        scopes = "playlist-modify-private"
+      }
 
       //now, send the user to the spotify authentication
       let client_id = "a144ffdca3a04024b85da45b0865dc17";

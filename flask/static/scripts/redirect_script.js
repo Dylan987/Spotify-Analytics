@@ -6,7 +6,7 @@ $(document).ready(function() {
   console.log(token);
 
   //use the token to make the request
-  
+
 
 
 });
