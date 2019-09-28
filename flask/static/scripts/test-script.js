@@ -539,7 +539,7 @@ $(document).ready(function() { //only runs when the code is ready
       min: 0.0,
       max: 1.0,
       step: 0.01,
-      values: [0.25, 0.75],
+      values: [0.0, 1.0],
       slide: function(e, ui) {
         let tuneable = this.id.slice(7);
         $("#slider-label-" + tuneable).val(ui.values[0] + " - " + ui.values[1]);
@@ -578,17 +578,17 @@ $(document).ready(function() { //only runs when the code is ready
       sessionStorage.setItem("playlist_info", JSON.stringify(playlist_info));
       let scopes;
       if (playlist_info["privacy"] === "public") {
-        scopes = "playlist-modify-private";
+        scopes = "playlist-modify-public";
       }
       else {
-        scopes = "playlist-modify-private"
+        scopes = "playlist-modify-private";
       }
 
       //now, send the user to the spotify authentication
       let client_id = "a144ffdca3a04024b85da45b0865dc17";
       let url = "https://accounts.spotify.com/authorize" +
         "?client_id="+client_id+"&response_type=token&redirect_uri=http://127.0.0.1:5000/playlist-generated.html" +
-        "&scopes=" + encodeURIComponent(scopes) + "&state=" + encodeURIComponent(statetime);
+        "&scope=" + encodeURIComponent(scopes) + "&state=" + encodeURIComponent(statetime);
       console.log("you clicked me");
       window.location.href = url;
     });
