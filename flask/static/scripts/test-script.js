@@ -557,7 +557,7 @@ $(document).ready(function() { //only runs when the code is ready
       console.log(tuneables);
       sessionStorage.setItem("tuneables", JSON.stringify(tuneables));
       //get the playlist info sessionStorage
-      let playlist_chars = ["title", "description", "privacy"];
+      let playlist_chars = ["title", "privacy", "description"];
 
       //defaults
       let d = new Date()
