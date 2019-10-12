@@ -13,7 +13,7 @@ $(document).ready(function() {
 
 
   // 1. get the list of songs that match the users choices
-  let get_ids = function() {
+  let get_ids = function(plid_pass_through) {
     let get_data = {}; //format the data to pass
     try {
       get_data["seed_artists"] = JSON.parse(sessionStorage.getItem("seed_artists")).join(",");
@@ -23,10 +23,12 @@ $(document).ready(function() {
     try {
       get_data["seed_tracks"] = JSON.parse(sessionStorage.getItem("seed_tracks")).join(",");
     } catch (e){
+      console.log(e);
     }
     try {
       get_data["seed_genres"] = JSON.parse(sessionStorage.getItem("seed_genres")).join(",");
     } catch(e) {
+      console.log(e);
     }
     let tuneables = JSON.parse(sessionStorage.getItem("tuneables"));
     let tunes = ["acousticness", "danceability", "energy", "instrumentalness", "valence"];
@@ -49,9 +51,9 @@ $(document).ready(function() {
         for (let i = 0; i < len; i++){
           ids.push(data.tracks[i].id);
         }
+        get_and_add_songs(plid_pass_through, ids);
       }
     });
-    return ids;
   };
 
 
@@ -59,13 +61,16 @@ $(document).ready(function() {
   // 2. make the playlist
   //gets the user id
   let get_user_id = function() {
+    console.log("got to get_user_id");
     $.ajax("https://api.spotify.com/v1/me", {
       headers: request_head,
       method: "GET",
       dataType: "json",
       success: (data) => {
+        create_playlist(data["id"]);
         return data["id"];
-      }
+      },
+      error: error => {console.log("error")}
     });
   };
 
@@ -81,29 +86,45 @@ $(document).ready(function() {
 
     let playlist_id = "";
     console.log(playlist_data);
-    $.ajax("https://api.spotify.com/v1/users/" + "21ddrf6nyskfyon2ul6yf76bi" + "/playlists", {
+    $.ajax("https://api.spotify.com/v1/users/" + user_id + "/playlists", {
       headers: request_head,
       data: JSON.stringify(playlist_data),
       method: "POST",
       success: (data) => {
         console.log(data);
         playlist_id = data["id"];
+        get_ids(playlist_id);
       },
       error: (error) => {
         console.log(error);
       }
     });
-    return playlist_id;
+
   };
 
-  //main code -- promises?
+  let get_and_add_songs = function(playlist_id, ids) {
+    let uris = [];
+    for (let i = 0; i < ids.length; i++) {
+      uris.push("spotify:track:" + ids[i]);
+    }
+    let song_data = {"uris" : uris};
+    $.ajax("https://api.spotify.com/v1/playlists/" + playlist_id + "/tracks", {
+      headers: request_head,
+      data: JSON.stringify(song_data),
+      method: "POST",
+      success: (data) => {
+        console.log(data);
+      },
+      error: (error) => {
+        console.log(error);
+      }
+    });
+  };
 
-  let id_promise = new Promise(function(resolve) {
-    resolve(get_user_id());
-  });
-  id_promise.then(function(result){
-    create_playlist(result);
-  });
+
+  //main code -- promises?
+  get_user_id();
+
 
 
 });
