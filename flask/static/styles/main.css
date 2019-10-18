@@ -306,7 +306,7 @@ canvas {
 .slider-box div {
   margin: 10px 0px;
 }
-.range-slider-container {
+.range-slider-container, .target-slider-container {
   width: 100%;
   color: mediumSeaGreen;
 }

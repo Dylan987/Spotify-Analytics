@@ -546,6 +546,18 @@ $(document).ready(function() { //only runs when the code is ready
       }
     });
 
+    $(".target-slider-container").slider({
+      range: false,
+      min: 0.0,
+      max: 1.0,
+      step: 0.01,
+      values: [0.5],
+      slide: function(e, ui) {
+        let tuneable = this.id.slice(7);
+        $("#target-slider-label-" + tuneable).val(ui.values[0]);
+      }
+    });
+
     //adding event listener for the btn
     $("#playlist-gen-btn").click(function(){
       //get the range slider values into sessionStorage
