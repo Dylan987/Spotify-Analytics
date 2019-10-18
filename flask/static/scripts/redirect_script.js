@@ -115,6 +115,14 @@ $(document).ready(function() {
       method: "POST",
       success: (data) => {
         console.log(data);
+        $(".playlist-display").attr({
+          "width":"300",
+          "height": "380",
+          "frameborder":"0",
+          "allowtransparency":"true",
+          "allow":"encrypted-media",
+          "src":"https://open.spotify.com/embed/playlist/" + playlist_id
+        });
       },
       error: (error) => {
         console.log(error);
