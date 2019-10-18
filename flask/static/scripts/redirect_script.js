@@ -35,6 +35,7 @@ $(document).ready(function() {
     for (let i = 0; i < 5; i++) {
       get_data["min_" + tunes[i]] = parseFloat(tuneables[tunes[i]][0]);
       get_data["max_" + tunes[i]] = parseFloat(tuneables[tunes[i]][1]);
+      get_data["target_" + tunes[i]] = parseFloat(tuneables[tunes[i][2]]);
     }
     console.log(get_data);
 

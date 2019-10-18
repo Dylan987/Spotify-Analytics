@@ -564,7 +564,8 @@ $(document).ready(function() { //only runs when the code is ready
       let tuneable_char = ["acousticness", "danceability", "energy", "instrumentalness", "valence"];
       let tuneables = {};
       $(".slider-box").each(function(index){
-        tuneables[tuneable_char[index]] = this.firstElementChild.lastElementChild.value.split("-");
+        tuneables[tuneable_char[index]] = this.children[0].lastElementChild.value.split("-");
+        tuneables[tuneable_char[index]].push(this.children[2].lastElementChild.value);
       });
       console.log(tuneables);
       sessionStorage.setItem("tuneables", JSON.stringify(tuneables));
