@@ -23,6 +23,10 @@ def search(qt):
 def analysis_page():
     return render_template("analysis.html")
 
+@app.route("/")
+def home_page_2():
+    return render_template("home.html")
+
 @app.route("/home.html")
 def home_page():
     return render_template("home.html")
