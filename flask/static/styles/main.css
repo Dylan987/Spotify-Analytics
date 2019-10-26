@@ -301,13 +301,15 @@ canvas {
 
 /* range slider css */
 .slider-box {
-  margin: 20px 0px;
+  padding: 15px 0px;
+  clear: both;
 }
 .slider-box div {
   margin: 10px 0px;
 }
 .range-slider-container, .target-slider-container {
-  width: 100%;
+  width: calc(100% - 1em);
+  left: 0.5em;
   color: mediumSeaGreen;
 }
 .slider-label {
