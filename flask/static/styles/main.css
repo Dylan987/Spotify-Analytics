@@ -301,15 +301,17 @@ canvas {
 
 /* range slider css */
 .slider-box {
-  padding: 15px 0px;
+  padding: 13px;
+  margin: 20px 0px;
   clear: both;
-}
-.slider-box div {
-  margin: 10px 0px;
+  border: 2px solid mediumSeaGreen;
+  border-radius: 10px;
+  box-shadow: 3px 3px 5px black;
 }
 .range-slider-container, .target-slider-container {
   width: calc(100% - 1em);
   left: 0.5em;
+  margin: 15px 0px;
   color: mediumSeaGreen;
 }
 .slider-label {
@@ -320,7 +322,8 @@ canvas {
 }
 input.slider-label {
   border-bottom: 1px solid mediumSeaGreen;
-  width: 200px;
+  width: 150px;
+  padding-left: 5px;
   background: none;
   outline: none;
   color: mediumSeaGreen;
@@ -348,4 +351,68 @@ label.slider-label {
 .textbox.textbox-playlist {
   margin: 0px 0px 30px 0px;
   padding: 8px 0px 8px 0px;
+}
+
+/* styles for the toggle switches */
+.slider-label-container {
+    display: flex;
+    align-items: baseline;
+    margin: 10px 0px;
+}
+/* The switch - the box around the slider */
+.switch {
+  position: relative;
+  margin-left: auto;
+  align-items: flex-end;
+  align-content: flex-end;
+  display: inline-block;
+  background-color: darkslategray;
+  width: 60px;
+  height: 34px;
+}
+
+/* Hide default HTML checkbox */
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* The slider */
+.switch-slider {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  bottom: 0px;
+  right: 0px;
+  cursor: pointer;
+  background-color: darkslategray;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.switch-slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .switch-slider {
+  background-color: mediumseagreen;
+}
+
+input:focus + .switch-slider {
+  box-shadow: 0 0 1px mediumseagreen;
+}
+
+input:checked + .switch-slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
 }
