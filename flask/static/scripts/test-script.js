@@ -585,7 +585,7 @@ $(document).ready(function() { //only runs when the code is ready
       let playlist_chars = ["title", "privacy", "description"];
 
       //defaults
-      let d = new Date()
+      let d = new Date();
       let statetime = d.getTime(); //used for a default playlist name and as a state value
       sessionStorage.setItem("statetime", encodeURIComponent(statetime));
       let playlist_info = {
