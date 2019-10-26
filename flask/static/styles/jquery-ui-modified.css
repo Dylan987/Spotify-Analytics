@@ -755,7 +755,6 @@ button.ui-button::-moz-focus-inner {
 	margin-left: -.6em;
 }
 .ui-slider-horizontal .ui-slider-range {
-	top: -0.8em;
 	height: 100%;
 }
 .ui-slider-horizontal .ui-slider-range-min {
