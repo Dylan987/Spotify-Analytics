@@ -1,6 +1,6 @@
 var iframe_rules = {"width":"300", "height":"80", "frameborder":"0", "allowtransparency":"true","allow":"encrypted-media"};
 
-var handle_button = function(event, source) {
+var handle_button = function() {
   console.log("listner triggered");
   var q = encodeURIComponent(document.getElementById("analysis-song-entry").value);
   var type = encodeURIComponent(document.getElementById("type-selection").value);
@@ -8,7 +8,7 @@ var handle_button = function(event, source) {
 
   var request = new XMLHttpRequest();
 
-  if (source=="analysis") {
+  if (window.location.pathname === "/analysis.html") {
     request.onload = function() {
       var data = JSON.parse(request.responseText);
       console.log(data);
@@ -159,7 +159,7 @@ var handle_button = function(event, source) {
       document.body.appendChild(table_rows);
     };
   }
-  else if (source=="seeds") {
+  else if (window.location.pathname === "/playlist-generator.html") {
     request.onload = function() {
       //get the data
       var data = JSON.parse(request.responseText);
@@ -328,6 +328,16 @@ var handle_button = function(event, source) {
 };
 
 $(document).ready(function() { //only runs when the code is ready
+
+  //replacing the js call from the html
+  $("#analysisform").click(handle_button);
+  $("#analysis-song-entry").on("keyup", function(e) {
+      console.log("called");
+      if (e.which === 13) {
+        console.log("they hit enter");
+        $("#analysisform").click();
+      }
+  });
 
   //collapsibles code
   if (document.getElementsByClassName("collapsible").length){
