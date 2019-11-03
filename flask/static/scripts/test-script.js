@@ -575,9 +575,21 @@ $(document).ready(function() { //only runs when the code is ready
       let tuneables = {};
       $(".slider-box").each(function(index){
         let input_els = this.querySelectorAll("input[type='text']");
+        let checkboxes = this.querySelectorAll("input[type='checkbox']");
+        console.log(checkboxes);
         console.log(input_els);
         tuneables[tuneable_char[index]] = input_els[0].value.split("-");
         tuneables[tuneable_char[index]].push(input_els[1].value);
+        //0 - none, 1 - only max/min, 2 - only target, 3 both (technically a bit set (00, 01, 10, 11) hehe
+        //note: this halves the # of if statments :)
+        let checked_set = 0;
+        if (checkboxes[0].checked){
+          checked_set += 1;
+        }
+        if (checkboxes[1].checked) {
+          checked_set += 2;
+        }
+        tuneables[tuneable_char[index]].push(checked_set);
       });
       console.log(tuneables);
       sessionStorage.setItem("tuneables", JSON.stringify(tuneables));
