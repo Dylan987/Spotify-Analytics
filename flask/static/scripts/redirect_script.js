@@ -18,24 +18,28 @@ $(document).ready(function() {
     try {
       get_data["seed_artists"] = JSON.parse(sessionStorage.getItem("seed_artists")).join(",");
     } catch (e) {
-      console.log(e);
+      console.log("no artists");
     }
     try {
       get_data["seed_tracks"] = JSON.parse(sessionStorage.getItem("seed_tracks")).join(",");
     } catch (e){
-      console.log(e);
+      console.log("no songs");
     }
     try {
       get_data["seed_genres"] = JSON.parse(sessionStorage.getItem("seed_genres")).join(",");
     } catch(e) {
-      console.log(e);
+      console.log("no genres");
     }
     let tuneables = JSON.parse(sessionStorage.getItem("tuneables"));
     let tunes = ["acousticness", "danceability", "energy", "instrumentalness", "valence"];
-    for (let i = 0; i < 5; i++) {
-      get_data["min_" + tunes[i]] = parseFloat(tuneables[tunes[i]][0]);
-      get_data["max_" + tunes[i]] = parseFloat(tuneables[tunes[i]][1]);
-      get_data["target_" + tunes[i]] = parseFloat(tuneables[tunes[i]][2]);
+    for (let i = 0; i < 5; i++) { //don't worry about the math. It's just a fancy set of 4 if statments
+      if (tuneables[tunes[i]][3] % 2){
+        get_data["min_" + tunes[i]] = parseFloat(tuneables[tunes[i]][0]);
+        get_data["max_" + tunes[i]] = parseFloat(tuneables[tunes[i]][1]);
+      }
+      if (Math.floor(tuneables[tunes[i]][3] / 2)) { //why don't they have nice intrger division
+        get_data["target_" + tunes[i]] = parseFloat(tuneables[tunes[i]][2]);
+      }
     }
     console.log(get_data);
 
