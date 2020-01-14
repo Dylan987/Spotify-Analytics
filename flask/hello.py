@@ -117,3 +117,47 @@ def album_analysis(i):
         feature.update(name = track["name"])
     removed = ["track_href", "uri", "type", "analysis_url", "key", "mode", "id", "TS", "time_signature", "Key", "name"]
     return render_template("album-analysis.html", title=name, artists=artists, id=id, ids=ids, features=features, features2=features2, averagefeatures=averagefeatures, averagefeatures2=averagefeatures2, album=albumtracks, removed=removed, audio_preview_link=audio_preview_link)
+
+@app.route("/analysis/artist-<i>")
+def artist_analysis(i):
+    # basic information
+    id = str(i)
+    artist = pyscripts.get_artist(id)
+    name = artist["name"]
+    # albums = pyscripts.get_artist_albums(id)["items"]
+    audio_preview_link = "https://open.spotify.com/embed/artist/" + i
+
+    top_songs = pyscripts.get_top_tracks(id)
+    ids = top_songs["tracks"][0]["id"] # becomes a comma separated string of song ids
+    if len(top_songs["tracks"]) > 1:
+        for i in range(1, len(top_songs["tracks"])):
+            ids += "," + top_songs["tracks"][i]["id"]
+
+    features = pyscripts.multianalysis(ids)["audio_features"] # list of song feature dictionaries
+    features2 = json.dumps(features)
+    # average track features by getting averages
+    average_removed = ["track_href", "uri", "type", "analysis_url", "key", "mode", "time_signature", "id"]
+    average_features = {"danceability": 0, "energy": 0, "loudness": 0, "speechiness": 0, "acousticness": 0, "instrumentalness": 0, "liveness": 0, "valence": 0, "tempo": 0, "duration_ms": 0}
+    for song_features in features:
+        for feature in song_features:
+            if feature not in average_removed:
+                average_features[feature] += song_features[feature]
+    for feature in average_features:
+        average_features[feature] /= len(top_songs["tracks"])
+        average_features[feature] = round(average_features[feature], 3)
+    average_features["duration_ms"] = round(average_features["duration_ms"])
+
+    average_features2 = json.dumps(average_features)
+    key = ["C", "C#/Db", "D", "D#/Eb", "E", "F", "F#/Gb", "G", "G#/Ab", "A", "A#/Bb", "B"]
+    mode = ["-", "+"]
+
+    for feature in features:
+        feature.update(Key = key[feature["key"]] + mode[feature["mode"]])
+        feature.update(TS = feature["time_signature"])
+        track = pyscripts.get_track(feature["id"])
+        feature.update(name = track["name"])
+
+    removed = ["track_href", "uri", "type", "analysis_url", "key", "mode", "id", "TS", "time_signature", "Key", "name"]
+
+    #songs is here for debugging purposes - i assume it somehow returns empty?
+    return render_template("artist-analysis.html", title=name) # unfinished
