@@ -48,6 +48,19 @@ def get_album(_id):
     req = requests.get(url, headers=head).json();
     return req
 
+def get_artist(_id):
+    head = {"Authorization": "Bearer " + get_token()}
+    url = "https://api.spotify.com/v1/artists/" + _id
+    req = requests.get(url, headers=head).json();
+    return req
+
+def get_artist_albums(_id):
+    head = {"Authorization": "Bearer " + get_token()}
+    url = "https://api.spotify.com/v1/artists/" + _id + "/albums"
+    para = {"limit": 5}
+    req = requests.get(url, headers=head, params=para).json();
+    return req
+
 def get_album_tracks(_id):
     head = {"Authorization": "Bearer " + get_token()}
     para = {"limit": "50"}
@@ -60,6 +73,19 @@ def get_similar_songs(_id):
     para = {"seed_tracks": _id, "limit": 5}
     url = "https://api.spotify.com/v1/recommendations"
     req = requests.get(url, headers=head, params=para).json()
+    return req
+
+def get_similar_artists(_id):
+    head = {"Authorization": "Bearer " + get_token()}
+    url = "https://api.spotify.com/v1/artists/" + _id + "/related-artists"
+    req = requests.get(url, headers=head).json();
+    return req
+
+def get_top_tracks(_id):
+    head = {"Authorization": "Bearer " + get_token()}
+    url = "https://api.spotify.com/v1/artists/" + _id + "/top-tracks"
+    para = {"country": "CA"} # cheating here - not sure how to add token from country
+    req = requests.get(url, headers=head, params=para).json();
     return req
 
 #will require authorization to work correctly to get proper token
