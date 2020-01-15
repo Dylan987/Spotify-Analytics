@@ -1,10 +1,11 @@
 import requests
 import base64
+import os
 
 
 def get_token():
-    client_id = $CLIENT_ID
-    client_secret = $CLIENT_SECRET
+    client_id = os.environ['spot_id']
+    client_secret = os.environ['spot_pass']
     auth_str = "{}:{}".format(client_id, client_secret)
     b64_auth_str = base64.b64encode(auth_str.encode()).decode()
     head = {"Authorization": "Basic " + b64_auth_str}
