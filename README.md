@@ -1,2 +1,4 @@
 # Spotify-Song-Analysis
-This web app allows users to analyze songs using the spotify API as well as generate custom playlists based on the characteristics identified by the API
+This web application has two main functionalities, in which users can do the following:
+  1. Search for tracks, albums, artists, and playlists using the Spotify API and see detailed analyses for the item of their choice
+  2. Generate custom playlists based on track characteristics identified by the API
