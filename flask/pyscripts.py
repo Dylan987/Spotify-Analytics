@@ -3,8 +3,8 @@ import base64
 
 
 def get_token():
-    client_id = "a144ffdca3a04024b85da45b0865dc17"
-    client_secret = "9aeee40325cf492e9e341384bd65cf5a"
+    client_id = $CLIENT_ID
+    client_secret = $CLIENT_SECRET
     auth_str = "{}:{}".format(client_id, client_secret)
     b64_auth_str = base64.b64encode(auth_str.encode()).decode()
     head = {"Authorization": "Basic " + b64_auth_str}
