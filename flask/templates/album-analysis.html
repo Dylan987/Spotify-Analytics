@@ -33,7 +33,7 @@
               <p><strong>Tempo: </strong>{{ song_features["tempo"] }} bpm</p>
               <p><strong>Beats per Bar: </strong>{{ song_features["TS"] }}</p>
               <p><strong>Duration: </strong>{{ song_features["duration_ms"]//60000 }}:{{ (song_features["duration_ms"] % 60000) // 1000 }}</p>
-              <p><strong>Loudnesss: </strong>{{  song_features["loudness"] }} dB</p>
+              <p><strong>Loudness: </strong>{{  song_features["loudness"] }} dB</p>
             </div>
             <div class="album-list-item-box">
               <div class="graph" data-features = "{{ features2 }}" list> <!--tells the JS that this is one element of a collection-->
