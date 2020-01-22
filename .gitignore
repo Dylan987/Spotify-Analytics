@@ -109,3 +109,4 @@ venv.bak/
 *.pyc
 flask/__pycache__/hello.cpython-37.pyc
 flask/__pycache__/pyscripts.cpython-37.pyc
+*.pyc
