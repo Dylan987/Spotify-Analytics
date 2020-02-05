@@ -32,7 +32,7 @@
               <p><strong>Key: </strong>{{ song_features["Key"] }}</p>
               <p><strong>Tempo: </strong>{{ song_features["tempo"] }} bpm</p>
               <p><strong>Beats per Bar: </strong>{{ song_features["TS"] }}</p>
-              <p><strong>Duration: </strong>{{ song_features["duration_ms"]//60000 }}:{{ (song_features["duration_ms"] % 60000) // 1000 }}</p>
+              <p><strong>Duration: </strong>{{ song_features["duration_ms"]//60000 }}:{{ "{:0>2}".format((song_features["duration_ms"] % 60000) // 1000) }}</p>
               <p><strong>Loudness: </strong>{{  song_features["loudness"] }} dB</p>
             </div>
             <div class="album-list-item-box">
