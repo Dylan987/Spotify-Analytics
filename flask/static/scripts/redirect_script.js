@@ -41,6 +41,7 @@ $(document).ready(function() {
         get_data["target_" + tunes[i]] = parseFloat(tuneables[tunes[i]][2]);
       }
     }
+    get_data["market"] = "from_token";
     console.log(get_data);
 
     let ids = [];

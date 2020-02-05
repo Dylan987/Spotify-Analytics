@@ -71,7 +71,7 @@ def get_album_tracks(_id):
 
 def get_similar_songs(_id):
     head = {"Authorization": "Bearer " + get_token()}
-    para = {"seed_tracks": _id, "limit": 5}
+    para = {"seed_tracks": _id, "limit": 5, "market": "from_token"}
     url = "https://api.spotify.com/v1/recommendations"
     req = requests.get(url, headers=head, params=para).json()
     return req
