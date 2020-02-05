@@ -31,7 +31,7 @@
     <p class="info-para"><strong>Key:</strong> {{ key }}</p>
     <p class="info-para"><strong>Tempo:</strong> {{ features["tempo"] }} bpm</p>
     <p class="info-para"><strong>Beats per Bar:</strong> {{ time_signature }}</p>
-    <p class="info-para"><strong>Duration:</strong> {{ features["duration_ms"]//60000 }}:{{ (features["duration_ms"] % 60000) // 1000 }}</p>
+    <p class="info-para"><strong>Duration:</strong> {{ features["duration_ms"]//60000 }}:{{ "{:0>2}".format((features["duration_ms"] % 60000) // 1000) }}</p>
     <p class="info-para"><strong>Average Loudness:</strong> {{ features["loudness"] }} dB</p>
   </div>
   <div class="grid-item graph" data-features="{{ features2 }}">
