@@ -6,7 +6,7 @@ import pyscripts
 import json
 import urllib.parse
 
-app = Flask("__name__")
+application = app = Flask("__name__")
 
 @app.route("/search/<qt>")
 def search(qt):
