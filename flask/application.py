@@ -6,7 +6,7 @@ import pyscripts
 import json
 import urllib.parse
 
-application = app = Flask("__name__")
+application = app = Flask(__name__)
 
 @app.route("/search/<qt>")
 def search(qt):
@@ -161,3 +161,7 @@ def artist_analysis(i):
 
     #songs is here for debugging purposes - i assume it somehow returns empty?
     return render_template("artist-analysis.html", title=name) # unfinished
+
+if __name__ == "__main__":
+    application.debug == True
+    application.run()
