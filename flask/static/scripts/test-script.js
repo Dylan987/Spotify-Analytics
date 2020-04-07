@@ -630,7 +630,7 @@ $(document).ready(function() { //only runs when the code is ready
       //now, send the user to the spotify authentication
       let client_id = "a144ffdca3a04024b85da45b0865dc17";
       let url = "https://accounts.spotify.com/authorize" +
-        "?client_id="+client_id+"&response_type=token&redirect_uri=http://127.0.0.1:5000/playlist-generated.html" +
+        "?client_id="+client_id+"&response_type=token&redirect_uri=http://"+window.location.hostname+"/playlist-generated.html" +
         "&scope=" + encodeURIComponent(scopes) + "&state=" + encodeURIComponent(statetime);
       console.log("you clicked me");
       window.location.href = url;
